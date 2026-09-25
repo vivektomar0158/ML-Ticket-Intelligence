@@ -1,0 +1,43 @@
+# CloudDesk: fictional B2B SaaS (team file sharing + helpdesk + integrations)
+product_description: >
+  CloudDesk is a B2B SaaS platform for team file sharing, workspace collaboration and a built-in
+  helpdesk. Customers are companies; users log in with email/password or SSO (Okta, Azure AD, Google).
+  It has a web app, mobile app, a public REST API, a desktop sync client and an admin console.
+  Current release is v4.2 (SSO token format changed in 4.2).
+
+categories:
+  BILLING:            {weight: 0.15, desc: "invoices, charges, refunds, plan changes, payment failures, tax/VAT"}
+  LOGIN_ACCESS:       {weight: 0.18, desc: "cannot sign in, password reset, MFA, SSO errors, locked accounts, 403/401 errors"}
+  BUG:                {weight: 0.20, desc: "features not working as designed, crashes, wrong data, UI glitches"}
+  FEATURE_REQUEST:    {weight: 0.08, desc: "asks for new functionality or improvement to existing behaviour"}
+  PERFORMANCE:        {weight: 0.10, desc: "slow loading, timeouts, sync delays, upload/download speed"}
+  INTEGRATION:        {weight: 0.11, desc: "API errors, webhooks, Slack/Jira/Okta/Zapier connectors, rate limits"}
+  ACCOUNT_MANAGEMENT: {weight: 0.10, desc: "user seats, roles/permissions, workspace settings, ownership transfer, deletion"}
+  DATA_PRIVACY:       {weight: 0.08, desc: "GDPR/data export or deletion, retention, audit logs, security questionnaires, suspected breach"}
+
+priorities: [LOW, MEDIUM, HIGH, URGENT]
+products: [web-app, mobile-app, api, desktop-sync, admin-console]
+tiers: {FREE: 0.50, PRO: 0.35, ENTERPRISE: 0.15}
+
+# first-response SLA in minutes: tier x priority
+sla_minutes:
+  FREE:       {LOW: 2880, MEDIUM: 1440, HIGH: 720, URGENT: 480}
+  PRO:        {LOW: 1440, MEDIUM: 480,  HIGH: 240, URGENT: 120}
+  ENTERPRISE: {LOW: 480,  MEDIUM: 240,  HIGH: 60,  URGENT: 15}
+
+personas:
+  - non-technical office worker
+  - IT administrator
+  - developer integrating the API
+  - team manager
+  - finance/billing contact
+  - executive assistant
+  - external contractor
+tones:
+  neutral: 0.40
+  polite: 0.20
+  frustrated: 0.20
+  angry: 0.08
+  terse: 0.07
+  rambling: 0.05
+writing_quality: {clean: 0.65, typos: 0.20, all_lowercase: 0.10, non_native: 0.05}
