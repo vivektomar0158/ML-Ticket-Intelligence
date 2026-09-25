@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     price_in_per_m: float = 0.10
     price_out_per_m: float = 0.40
     artifacts_dir: str = str(ROOT / "ml-service" / "artifacts")
+    admin_key: str = "dev-admin-key"      # protects /admin/reload (retraining pipeline -> hot reload)
     confidence_threshold: float = 0.80    # cascade: below this, category goes to the LLM
 
 

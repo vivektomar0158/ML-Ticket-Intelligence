@@ -5,7 +5,7 @@ import uuid
 from contextlib import asynccontextmanager
 
 import numpy as np
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, Header, HTTPException, Request
 from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import JSONResponse
 from prometheus_client import Counter, Histogram
@@ -15,7 +15,7 @@ from app.config import settings
 from app.llm import prompts
 from app.llm.gemini import LlmUnavailable, gateway
 from app.llm.pii import redact
-from app.models.registry import EMB_VERSION, registry
+from app.models.registry import EMB_VERSION, Registry, registry
 from app.schemas import (AnalyzeItem, AnalyzeRequest, AnalyzeResponse, CitationOut, DraftRequest, DraftResponse,
                          EmbedRequest, EmbedResponse, EscalationItem, EscalationRequest, EscalationResponse, JudgeRequest,
                          JudgeResponse, LlmClassifyRequest, LlmClassifyResponse, LlmMeta)
@@ -74,6 +74,20 @@ def ready():
 def models() -> dict:
     return {"versions": registry.versions, "confidenceThreshold": settings.confidence_threshold,
             "seniorThreshold": registry.senior_threshold, "llmModels": gateway.models, "llmStats": gateway.stats}
+
+
+# ---------------------------------------------------------- model lifecycle
+@app.post("/admin/reload")
+async def reload_models(x_admin_key: str | None = Header(default=None)):
+    """Hot-reload artifacts after a promoted retrain (no restart, no dropped requests: the swap happens after loading)."""
+    if x_admin_key != settings.admin_key:
+        raise HTTPException(status_code=403, detail="forbidden")
+    fresh = Registry()
+    await run_in_threadpool(fresh.load)
+    fresh._cache = registry._cache            # keep warm embeddings (embedding model unchanged)
+    registry.__dict__.update({k: v for k, v in fresh.__dict__.items() if k != "_lock"})
+    log.info("models reloaded: %s", registry.versions)
+    return {"versions": registry.versions}
 
 
 # ------------------------------------------------------------- fast models

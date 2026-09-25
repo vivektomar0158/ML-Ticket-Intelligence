@@ -16,10 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class MetricsController {
     private final JdbcTemplate jdbc;
     private final JobRepository jobs;
+    private final DriftService drift;
 
-    public MetricsController(JdbcTemplate jdbc, JobRepository jobs) {
+    public MetricsController(JdbcTemplate jdbc, JobRepository jobs, DriftService drift) {
         this.jdbc = jdbc;
         this.jobs = jobs;
+        this.drift = drift;
+    }
+
+    @GetMapping("/api/metrics/drift")
+    public Map<String, Object> drift() {
+        return drift.compute();
     }
 
     @GetMapping("/api/metrics/overview")

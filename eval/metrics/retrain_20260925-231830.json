@@ -1,0 +1,20 @@
+{
+  "new_version": "20260925-231830",
+  "current_version": "20260925-215803",
+  "corrections_used": 14,
+  "frozen_test": {
+    "current_macro_f1": 0.9661936394045705,
+    "candidate_macro_f1": 0.9686811817775056,
+    "worst_class_drop": 0.00934201480163388
+  },
+  "recent_traffic_probe": {
+    "n": 5,
+    "current_accuracy": 0.6,
+    "candidate_accuracy": 0.6
+  },
+  "gate": {
+    "macro_f1_ok": true,
+    "per_class_ok": true
+  },
+  "promoted": true
+}

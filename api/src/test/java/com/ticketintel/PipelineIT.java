@@ -407,6 +407,34 @@ class PipelineIT {
     }
 
     @Test
+    void driftMonitorFlagsAJumpInLowConfidenceTickets() throws Exception {
+        String agent = login("agent");
+        // baseline: 35 confident tickets, aged into the 7-37 day window
+        for (int i = 0; i < 35; i++) ingest("SSO baseline " + i, "sso baseline ticket " + i, "C" + i, "FREE");
+        await("baseline triaged", () -> jdbc.queryForObject("SELECT count(*) FROM tickets WHERE triaged_at IS NOT NULL", Integer.class) == 35);
+        jdbc.update("UPDATE predictions SET created_at = now() - interval '20 days'");
+        // recent week: the cheap model becomes unsure about most new tickets (new kind of traffic)
+        ml.categoryConfidence = 0.55;
+        for (int i = 0; i < 35; i++) ingest("Invoice odd " + i, "invoice strange thing " + i, "D" + i, "FREE");
+        await("recent triaged", () -> jdbc.queryForObject("SELECT count(*) FROM tickets WHERE triaged_at IS NOT NULL", Integer.class) == 70);
+        JsonNode d = call("GET", "/api/metrics/drift", null, agent).body();
+        assertThat(d.path("enoughData").asBoolean()).isTrue();
+        assertThat(d.path("alert").asBoolean()).isTrue();
+        assertThat(d.path("recent7d").path("lowConfidenceShare").asDouble()).isGreaterThan(0.9);
+        assertThat(d.path("baseline30d").path("lowConfidenceShare").asDouble()).isLessThan(0.1);
+        assertThat(d.path("reasons").size()).isGreaterThanOrEqualTo(1);
+    }
+
+    @Test
+    void driftMonitorStaysQuietOnSmallSamples() throws Exception {
+        ingest("SSO one", "sso one", "C1", "FREE");
+        await("triaged", () -> jdbc.queryForObject("SELECT count(*) FROM tickets WHERE triaged_at IS NOT NULL", Integer.class) == 1);
+        JsonNode d = call("GET", "/api/metrics/drift", null, login("agent")).body();
+        assertThat(d.path("enoughData").asBoolean()).isFalse();
+        assertThat(d.path("alert").asBoolean()).isFalse();
+    }
+
+    @Test
     void serverSentEventsAnnounceTriage() throws Exception {
         String token = login("agent");
         var req = HttpRequest.newBuilder(URI.create("http://localhost:" + port + "/api/events?access_token=" + token)).build();
