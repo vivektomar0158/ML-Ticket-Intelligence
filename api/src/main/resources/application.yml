@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: api
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/ticketintel}
+    username: ${SPRING_DATASOURCE_USERNAME:ticketintel}
+    password: ${SPRING_DATASOURCE_PASSWORD:ticketintel}
+  jpa:
+    hibernate.ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+
+management:
+  endpoints.web.exposure.include: health,info,prometheus
+  endpoint.health.probes.enabled: true
+
+app:
+  ml-service-url: ${ML_SERVICE_URL:http://localhost:8000}
