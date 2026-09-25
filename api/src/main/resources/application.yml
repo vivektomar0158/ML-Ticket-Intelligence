@@ -5,15 +5,58 @@ spring:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/ticketintel}
     username: ${SPRING_DATASOURCE_USERNAME:ticketintel}
     password: ${SPRING_DATASOURCE_PASSWORD:ticketintel}
-  jpa:
-    hibernate.ddl-auto: validate
-    open-in-view: false
+    hikari:
+      maximum-pool-size: 20
   flyway:
+    enabled: true
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  mvc:
+    async:
+      request-timeout: -1      # SSE streams stay open
+
+server:
+  port: ${SERVER_PORT:8080}
+  compression:
     enabled: true
 
 management:
   endpoints.web.exposure.include: health,info,prometheus
   endpoint.health.probes.enabled: true
+  endpoint.health.show-details: never
 
 app:
   ml-service-url: ${ML_SERVICE_URL:http://localhost:8000}
+  ml:
+    fast-timeout-ms: 8000
+    llm-timeout-ms: 60000
+    breaker-open-seconds: 20
+  security:
+    jwt-secret: ${JWT_SECRET:dev-only-secret-change-me-dev-only-secret-change-me}
+    jwt-ttl-hours: 8
+    ingest-api-key: ${INGEST_API_KEY:dev-ingest-key}
+    seed-users: ${SEED_USERS:true}
+    cors-origins: ${CORS_ORIGINS:http://localhost:5173,http://localhost:8081}
+  workers:
+    enabled: ${WORKERS_ENABLED:true}
+    triage-threads: 2
+    triage-batch: 32
+    classify-threads: 2
+    draft-threads: 3
+    poll-min-ms: 200
+    poll-max-ms: 2000
+    visibility-timeout-minutes: 5
+  dedup:
+    tau: 0.70                # chosen on the incident-replay evaluation (eval/report.md)
+    window-hours: 3
+    burst-minutes: 60
+    incident-min-tickets: 5
+    incident-min-customers: 3
+  retrieval:
+    top-k: 5
+  draft:
+    shed-queue-depth: 200
+    incident-reuse-hours: 2
+    max-wait-hours: 6
