@@ -1,0 +1,1 @@
+{"data": {"category": "BILLING", "priority": "MEDIUM", "confidence": 1.0, "rationale": "The ticket concerns an unrecognized charge and an error viewing invoices in the admin console."}, "meta": {"model": "gemini-3.5-flash-lite", "latency_ms": 1190, "input_tokens": 384, "output_tokens": 53, "cost_usd": 5.960000000000001e-05}}

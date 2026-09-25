@@ -1,0 +1,1 @@
+{"data": {"category": "INTEGRATION", "priority": "HIGH", "confidence": 0.95, "rationale": "The user is reporting a specific error code and UI issue preventing the generation of API keys, which blocks their ability to use the integration features."}, "meta": {"model": "gemini-3.1-flash-lite", "latency_ms": 2396, "input_tokens": 365, "output_tokens": 67, "cost_usd": 6.33e-05}}

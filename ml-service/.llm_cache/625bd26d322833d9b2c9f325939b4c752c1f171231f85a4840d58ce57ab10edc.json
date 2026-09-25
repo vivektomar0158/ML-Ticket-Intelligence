@@ -1,0 +1,1 @@
+{"data": {"category": "BUG", "priority": "HIGH", "confidence": 0.99, "rationale": "The ticket reports a consistent application crash when performing a standard function, which is blocking the customer's work."}, "meta": {"model": "gemini-3.5-flash-lite", "latency_ms": 1010, "input_tokens": 378, "output_tokens": 59, "cost_usd": 6.14e-05}}

@@ -1,0 +1,1 @@
+{"data": {"category": "BILLING", "priority": "MEDIUM", "confidence": 0.95, "rationale": "The customer is requesting a plan downgrade and encountering a billing-related error code."}, "meta": {"model": "gemini-3.5-flash-lite", "latency_ms": 1029, "input_tokens": 368, "output_tokens": 54, "cost_usd": 5.840000000000001e-05}}

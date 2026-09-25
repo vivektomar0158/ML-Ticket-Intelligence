@@ -1,0 +1,1 @@
+{"data": {"category": "ACCOUNT_MANAGEMENT", "priority": "LOW", "confidence": 0.95, "rationale": "The customer is inquiring about workspace settings related to audit log retention limits and how to modify them."}, "meta": {"model": "gemini-flash-lite-latest", "latency_ms": 943, "input_tokens": 376, "output_tokens": 59, "cost_usd": 6.12e-05}}

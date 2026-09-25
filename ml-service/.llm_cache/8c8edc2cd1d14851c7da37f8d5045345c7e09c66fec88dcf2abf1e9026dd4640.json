@@ -1,0 +1,1 @@
+{"data": {"category": "BILLING", "priority": "MEDIUM", "confidence": 0.99, "rationale": "The customer is asking for a refund for an accidental plan upgrade charge."}, "meta": {"model": "gemini-3.5-flash-lite", "latency_ms": 1478, "input_tokens": 380, "output_tokens": 52, "cost_usd": 5.8800000000000006e-05}}

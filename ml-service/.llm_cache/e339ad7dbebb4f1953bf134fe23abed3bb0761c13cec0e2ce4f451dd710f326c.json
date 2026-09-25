@@ -1,0 +1,1 @@
+{"data": {"category": "BUG", "priority": "HIGH", "confidence": 0.95, "rationale": "The User Activity report in the admin console is failing to load with a specific error code, which blocks the user's workflow ahead of an important demo."}, "meta": {"model": "gemini-3.5-flash-lite", "latency_ms": 978, "input_tokens": 399, "output_tokens": 68, "cost_usd": 6.71e-05}}

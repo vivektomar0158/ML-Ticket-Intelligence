@@ -1,0 +1,1 @@
+{"data": {"category": "PERFORMANCE", "priority": "HIGH", "confidence": 0.92, "rationale": "The ticket reports enterprise-wide high CPU utilization caused by the desktop sync client, which represents a significant client performance issue affecting work."}, "meta": {"model": "gemini-flash-latest", "latency_ms": 4739, "input_tokens": 390, "output_tokens": 64, "cost_usd": 6.46e-05}}

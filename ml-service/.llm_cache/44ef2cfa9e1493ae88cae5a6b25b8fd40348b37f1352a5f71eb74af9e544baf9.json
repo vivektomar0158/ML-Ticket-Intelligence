@@ -1,0 +1,1 @@
+{"data": {"category": "BUG", "priority": "HIGH", "confidence": 0.95, "rationale": "The customer is experiencing a functional failure (search returning empty with an error code) that is blocking their urgent work for an audit tomorrow."}, "meta": {"model": "gemini-flash-lite-latest", "latency_ms": 911, "input_tokens": 375, "output_tokens": 64, "cost_usd": 6.31e-05}}

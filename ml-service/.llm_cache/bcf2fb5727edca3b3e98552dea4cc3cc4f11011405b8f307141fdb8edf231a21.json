@@ -1,0 +1,1 @@
+{"data": {"category": "BUG", "priority": "URGENT", "confidence": 0.95, "rationale": "The iOS mobile app reliably crashes without error when uploading files over 1GB, critically blocking the entire development team's workflow."}, "meta": {"model": "gemini-flash-latest", "latency_ms": 3954, "input_tokens": 398, "output_tokens": 65, "cost_usd": 6.58e-05}}

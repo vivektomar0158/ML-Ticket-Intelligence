@@ -1,0 +1,1 @@
+{"data": {"category": "BILLING", "priority": "MEDIUM", "confidence": 0.95, "rationale": "The customer is unable to access past billing invoices and is seeing a specific error code related to invoice records."}, "meta": {"model": "gemini-3.5-flash-lite", "latency_ms": 1113, "input_tokens": 360, "output_tokens": 59, "cost_usd": 5.96e-05}}

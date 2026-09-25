@@ -1,0 +1,1 @@
+{"data": {"category": "BUG", "priority": "HIGH", "confidence": 0.95, "rationale": "The ticket describes a specific feature failure resulting in a blank page and error code, which impedes the user's upcoming audit."}, "meta": {"model": "gemini-flash-lite-latest", "latency_ms": 963, "input_tokens": 392, "output_tokens": 63, "cost_usd": 6.440000000000001e-05}}

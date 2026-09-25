@@ -1,0 +1,1 @@
+{"data": {"category": "BUG", "priority": "MEDIUM", "confidence": 0.95, "rationale": "The search function is throwing an error code and failing to return expected results, which indicates a technical bug affecting document retrieval."}, "meta": {"model": "gemini-3.5-flash-lite", "latency_ms": 1535, "input_tokens": 442, "output_tokens": 61, "cost_usd": 6.860000000000001e-05}}

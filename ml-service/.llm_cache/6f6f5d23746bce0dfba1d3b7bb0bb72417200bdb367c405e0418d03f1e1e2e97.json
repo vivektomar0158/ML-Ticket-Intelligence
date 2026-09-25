@@ -1,0 +1,1 @@
+{"data": {"category": "PERFORMANCE", "priority": "HIGH", "confidence": 0.9, "rationale": "The customer is experiencing a synchronization issue and error code after a desktop update, which is blocking their work ahead of an audit."}, "meta": {"model": "gemini-3.5-flash-lite", "latency_ms": 1216, "input_tokens": 396, "output_tokens": 62, "cost_usd": 6.44e-05}}

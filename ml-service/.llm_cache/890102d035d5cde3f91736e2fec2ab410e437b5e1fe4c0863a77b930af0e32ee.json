@@ -1,0 +1,1 @@
+{"data": {"category": "DATA_PRIVACY", "priority": "MEDIUM", "confidence": 0.95, "rationale": "The ticket concerns a GDPR data export missing specific comment data, which falls directly under data privacy and compliance."}, "meta": {"model": "gemini-3.5-flash-lite", "latency_ms": 1311, "input_tokens": 382, "output_tokens": 61, "cost_usd": 6.26e-05}}

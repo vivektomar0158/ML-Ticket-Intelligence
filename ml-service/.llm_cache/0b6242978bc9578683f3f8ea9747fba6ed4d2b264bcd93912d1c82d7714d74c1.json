@@ -1,0 +1,1 @@
+{"data": {"category": "LOGIN_ACCESS", "priority": "HIGH", "confidence": 0.95, "rationale": "The issue involves repeated session expirations preventing users from accessing the mobile application, which is causing significant workflow disruption."}, "meta": {"model": "gemini-3.1-flash-lite", "latency_ms": 1990, "input_tokens": 372, "output_tokens": 61, "cost_usd": 6.16e-05}}

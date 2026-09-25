@@ -1,0 +1,1 @@
+{"data": {"category": "DATA_PRIVACY", "priority": "HIGH", "confidence": 0.95, "rationale": "The ticket involves audit log exports which fall under data privacy and compliance, and it affects multiple users attempting to export data."}, "meta": {"model": "gemini-3.5-flash-lite", "latency_ms": 1011, "input_tokens": 368, "output_tokens": 64, "cost_usd": 6.240000000000001e-05}}

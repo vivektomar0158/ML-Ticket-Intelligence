@@ -1,0 +1,1 @@
+{"data": {"category": "LOGIN_ACCESS", "priority": "HIGH", "confidence": 0.9, "rationale": "The user is unable to log into the platform because their invite status is stuck, which is blocking their work."}, "meta": {"model": "gemini-3.6-flash", "latency_ms": 2326, "input_tokens": 368, "output_tokens": 60, "cost_usd": 6.080000000000001e-05}}

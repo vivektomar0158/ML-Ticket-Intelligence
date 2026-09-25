@@ -1,0 +1,1 @@
+{"data": {"category": "BUG", "priority": "HIGH", "confidence": 0.95, "rationale": "The system is failing to enforce a configured data retention policy, which represents a failure of an existing feature and potential compliance risk."}, "meta": {"model": "gemini-3-flash-preview", "latency_ms": 3971, "input_tokens": 386, "output_tokens": 45, "cost_usd": 5.660000000000001e-05}}

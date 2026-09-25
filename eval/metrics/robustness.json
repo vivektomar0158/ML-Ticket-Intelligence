@@ -1,0 +1,52 @@
+{
+  "baseline (seen root causes)": {
+    "tfidf_lr": 0.9821124059639937,
+    "emb_lr": 0.9629943484084036,
+    "n_train": 5329,
+    "n_test": 1724
+  },
+  "A. error codes masked": {
+    "tfidf_lr": 0.9601833009514498,
+    "emb_lr": 0.9357499689914902,
+    "n_train": 5329,
+    "n_test": 1724
+  },
+  "held_out_root_causes": [
+    "RC-094",
+    "RC-092",
+    "RC-101",
+    "RC-007",
+    "RC-001",
+    "RC-009",
+    "RC-034",
+    "RC-038",
+    "RC-033",
+    "RC-118",
+    "RC-120",
+    "RC-110",
+    "RC-054",
+    "RC-047",
+    "RC-057",
+    "RC-089",
+    "RC-086",
+    "RC-078",
+    "RC-018",
+    "RC-017",
+    "RC-029",
+    "RC-070",
+    "RC-071",
+    "RC-075"
+  ],
+  "B. unseen root causes": {
+    "tfidf_lr": 0.5972780203155414,
+    "emb_lr": 0.5903210205529856,
+    "n_train": 4435,
+    "n_test": 1384
+  },
+  "C. unseen + masked": {
+    "tfidf_lr": 0.5354501412064476,
+    "emb_lr": 0.5416891706271569,
+    "n_train": 4435,
+    "n_test": 1384
+  }
+}

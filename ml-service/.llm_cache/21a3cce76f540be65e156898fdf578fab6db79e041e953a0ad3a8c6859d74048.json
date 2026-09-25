@@ -1,0 +1,1 @@
+{"data": {"category": "BUG", "priority": "LOW", "confidence": 0.95, "rationale": "The ticket reports a feature not working as designed with a specific error code, and the customer explicitly stated there is no major rush."}, "meta": {"model": "gemini-3.5-flash-lite", "latency_ms": 1199, "input_tokens": 390, "output_tokens": 63, "cost_usd": 6.42e-05}}

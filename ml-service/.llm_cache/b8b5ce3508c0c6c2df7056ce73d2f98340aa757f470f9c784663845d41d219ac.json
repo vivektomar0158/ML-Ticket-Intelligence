@@ -1,0 +1,1 @@
+{"data": {"category": "ACCOUNT_MANAGEMENT", "priority": "MEDIUM", "confidence": 0.95, "rationale": "The user is experiencing an issue with workspace user management and permissions, specifically regarding the removal of a user account."}, "meta": {"model": "gemini-3.1-flash-lite", "latency_ms": 2485, "input_tokens": 382, "output_tokens": 62, "cost_usd": 6.3e-05}}

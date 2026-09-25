@@ -1,0 +1,1 @@
+{"data": {"category": "ACCOUNT_MANAGEMENT", "priority": "HIGH", "confidence": 0.95, "rationale": "The user is unable to add team members due to a seat limit error, which is blocking their onboarding process and requires prompt attention."}, "meta": {"model": "gemini-3.1-flash-lite", "latency_ms": 3582, "input_tokens": 392, "output_tokens": 66, "cost_usd": 6.560000000000001e-05}}

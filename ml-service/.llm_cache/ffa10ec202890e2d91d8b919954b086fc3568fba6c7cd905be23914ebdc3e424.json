@@ -1,0 +1,1 @@
+{"data": {"category": "DATA_PRIVACY", "priority": "HIGH", "confidence": 1.0, "rationale": "The ticket involves an incomplete GDPR data export required for a compliance audit deadline this Friday."}, "meta": {"model": "gemini-3-flash-preview", "latency_ms": 7699, "input_tokens": 383, "output_tokens": 39, "cost_usd": 5.390000000000001e-05}}

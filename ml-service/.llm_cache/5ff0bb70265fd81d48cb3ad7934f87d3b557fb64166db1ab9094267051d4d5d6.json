@@ -1,0 +1,1 @@
+{"data": {"category": "LOGIN_ACCESS", "priority": "HIGH", "confidence": 0.95, "rationale": "The user is experiencing a specific access error code (CD-AM-002) preventing login after a role change, which is blocking critical business operations."}, "meta": {"model": "gemini-3.1-flash-lite", "latency_ms": 3295, "input_tokens": 374, "output_tokens": 71, "cost_usd": 6.58e-05}}

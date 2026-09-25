@@ -1,0 +1,1 @@
+{"data": {"category": "BILLING", "priority": "HIGH", "confidence": 0.95, "rationale": "The user is unable to access invoices or manage payment methods due to a specific billing portal error, which directly impacts subscription management."}, "meta": {"model": "gemini-3-flash-preview", "latency_ms": 2049, "input_tokens": 397, "output_tokens": 46, "cost_usd": 5.81e-05}}

@@ -1,0 +1,1 @@
+{"data": {"category": "BILLING", "priority": "LOW", "confidence": 0.95, "rationale": "The customer is asking for guidance on how to update a purchase order number for future invoices."}, "meta": {"model": "gemini-3.5-flash-lite", "latency_ms": 961, "input_tokens": 368, "output_tokens": 56, "cost_usd": 5.920000000000001e-05}}

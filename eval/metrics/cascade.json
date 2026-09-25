@@ -1,0 +1,100 @@
+{
+  "in_dist": {
+    "n": 56,
+    "small_only_accuracy": 1.0,
+    "small_only_macro_f1": 1.0,
+    "llm_only_accuracy": 0.625,
+    "llm_only_macro_f1": 0.3972967162393322,
+    "table": [
+      {
+        "tau": 0.0,
+        "llm_share": 0.0,
+        "macro_f1": 1.0,
+        "accuracy": 1.0,
+        "cost_per_1k_usd": 0.0,
+        "mean_latency_ms": 14.86189998104237
+      },
+      {
+        "tau": 0.3,
+        "llm_share": 0.0,
+        "macro_f1": 1.0,
+        "accuracy": 1.0,
+        "cost_per_1k_usd": 0.0,
+        "mean_latency_ms": 14.86189998104237
+      },
+      {
+        "tau": 0.4,
+        "llm_share": 0.0,
+        "macro_f1": 1.0,
+        "accuracy": 1.0,
+        "cost_per_1k_usd": 0.0,
+        "mean_latency_ms": 14.86189998104237
+      },
+      {
+        "tau": 0.5,
+        "llm_share": 0.0,
+        "macro_f1": 1.0,
+        "accuracy": 1.0,
+        "cost_per_1k_usd": 0.0,
+        "mean_latency_ms": 14.86189998104237
+      },
+      {
+        "tau": 0.6,
+        "llm_share": 0.0,
+        "macro_f1": 1.0,
+        "accuracy": 1.0,
+        "cost_per_1k_usd": 0.0,
+        "mean_latency_ms": 14.86189998104237
+      },
+      {
+        "tau": 0.7,
+        "llm_share": 0.0,
+        "macro_f1": 1.0,
+        "accuracy": 1.0,
+        "cost_per_1k_usd": 0.0,
+        "mean_latency_ms": 14.86189998104237
+      },
+      {
+        "tau": 0.8,
+        "llm_share": 0.0,
+        "macro_f1": 1.0,
+        "accuracy": 1.0,
+        "cost_per_1k_usd": 0.0,
+        "mean_latency_ms": 14.86189998104237
+      },
+      {
+        "tau": 0.9,
+        "llm_share": 0.07142857142857142,
+        "macro_f1": 0.7731034482758621,
+        "accuracy": 0.9464285714285714,
+        "cost_per_1k_usd": 0.004460714285714286,
+        "mean_latency_ms": 152.44608365451174
+      },
+      {
+        "tau": 0.95,
+        "llm_share": 0.07142857142857142,
+        "macro_f1": 0.7731034482758621,
+        "accuracy": 0.9464285714285714,
+        "cost_per_1k_usd": 0.004460714285714286,
+        "mean_latency_ms": 152.44608365451174
+      },
+      {
+        "tau": 1.01,
+        "llm_share": 1.0,
+        "macro_f1": 0.3972967162393322,
+        "accuracy": 0.625,
+        "cost_per_1k_usd": 0.06245,
+        "mean_latency_ms": 1941.0404714096137
+      }
+    ],
+    "confidence_informative": {
+      "acc_when_conf_lt_0.6": null,
+      "n_lt": 0,
+      "acc_when_conf_ge_0.6": 1.0,
+      "n_ge": 56
+    }
+  },
+  "unseen": {
+    "status": "pending: no Gemini results (free-tier quota); rerun eval_llm_zeroshot after reset"
+  }
+}

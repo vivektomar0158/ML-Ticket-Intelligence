@@ -1,0 +1,1 @@
+{"data": {"category": "LOGIN_ACCESS", "priority": "URGENT", "confidence": 0.99, "rationale": "The ticket reports a critical enterprise-wide outage affecting all users trying to sign in via SSO following an update."}, "meta": {"model": "gemini-flash-lite-latest", "latency_ms": 1011, "input_tokens": 386, "output_tokens": 63, "cost_usd": 6.38e-05}}

@@ -1,0 +1,1 @@
+{"data": {"category": "BUG", "priority": "MEDIUM", "confidence": 0.95, "rationale": "The user is reporting that a specific feature, the user activity report, is failing to load data while other reports work properly."}, "meta": {"model": "gemini-flash-lite-latest", "latency_ms": 1039, "input_tokens": 368, "output_tokens": 62, "cost_usd": 6.16e-05}}

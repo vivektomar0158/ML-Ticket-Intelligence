@@ -1,0 +1,22 @@
+{
+  "in_dist": {
+    "n": 56,
+    "macro_f1": 0.3972967162393322,
+    "accuracy": 0.625,
+    "priority_accuracy": 0.5714285714285714,
+    "latency_p50_ms": 1312.0,
+    "latency_p95_ms": 4731.5,
+    "cost_per_1k_tickets_usd": 0.06245,
+    "avg_in_tokens": 381.7142857142857,
+    "avg_out_tokens": 60.69642857142857,
+    "models_used": {
+      "gemini-3.5-flash-lite": 21,
+      "gemini-3.1-flash-lite": 15,
+      "gemini-flash-lite-latest": 12,
+      "gemini-3-flash-preview": 5,
+      "gemini-flash-latest": 2,
+      "gemini-3.6-flash": 1
+    },
+    "planned_n": 120
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "n_features": 63,
+  "positive_rate": {
+    "train": 0.166635391255395,
+    "test": 0.19721577726218098
+  },
+  "logreg_baseline_auc": 0.7346905814348862,
+  "val_auc": 0.7293072424651371,
+  "params": {
+    "objective": "binary",
+    "learning_rate": 0.03,
+    "num_leaves": 31,
+    "min_child_samples": 40,
+    "subsample": 0.9,
+    "subsample_freq": 1,
+    "colsample_bytree": 0.9,
+    "reg_lambda": 5.0,
+    "n_estimators": 2000,
+    "random_state": 11
+  },
+  "best_iteration": 13,
+  "test": {
+    "roc_auc": 0.7278784852091126,
+    "pr_auc": 0.39405499830343427,
+    "brier_raw": 0.1514353367846801,
+    "brier_platt": 0.1422254051520301,
+    "brier_isotonic": 0.14132369135902564,
+    "ece_raw": 0.03831728778139619,
+    "ece_platt": 0.03308530699504612,
+    "ece_isotonic": 0.029035329262584824
+  },
+  "reliability_raw": [
+    {
+      "bin": 1,
+      "mean_pred": 0.15471265481657298,
+      "frac_pos": 0.14907275320970043,
+      "n": 1402
+    },
+    {
+      "bin": 2,
+      "mean_pred": 0.22623645316058474,
+      "frac_pos": 0.40683229813664595,
+      "n": 322
+    }
+  ],
+  "reliability_calibrated": [
+    {
+      "bin": 0,
+      "mean_pred": 0.07166888259835529,
+      "frac_pos": 0.07977207977207977,
+      "n": 702
+    },
+    {
+      "bin": 1,
+      "mean_pred": 0.13849948521421832,
+      "frac_pos": 0.1989051094890511,
+      "n": 548
+    },
+    {
+      "bin": 2,
+      "mean_pred": 0.24509582310340947,
+      "frac_pos": 0.27717391304347827,
+      "n": 184
+    },
+    {
+      "bin": 3,
+      "mean_pred": 0.34649889698986075,
+      "frac_pos": 0.3541666666666667,
+      "n": 144
+    },
+    {
+      "bin": 4,
+      "mean_pred": 0.43879216654949915,
+      "frac_pos": 0.41304347826086957,
+      "n": 92
+    },
+    {
+      "bin": 5,
+      "mean_pred": 0.5500338682372858,
+      "frac_pos": 0.717948717948718,
+      "n": 39
+    },
+    {
+      "bin": 6,
+      "mean_pred": 0.6216171264776038,
+      "frac_pos": 0.4666666666666667,
+      "n": 15
+    }
+  ],
+  "routing": [
+    {
+      "threshold": 0.2,
+      "routed_share": 0.27494199535962877,
+      "precision": 0.3691983122362869,
+      "recall": 0.5147058823529411
+    },
+    {
+      "threshold": 0.3,
+      "routed_share": 0.16821345707656613,
+      "precision": 0.42758620689655175,
+      "recall": 0.36470588235294116
+    },
+    {
+      "threshold": 0.4,
+      "routed_share": 0.08468677494199536,
+      "precision": 0.5,
+      "recall": 0.21470588235294116
+    },
+    {
+      "threshold": 0.5,
+      "routed_share": 0.031322505800464036,
+      "precision": 0.6481481481481481,
+      "recall": 0.10294117647058823
+    },
+    {
+      "threshold": 0.6,
+      "routed_share": 0.008700696055684454,
+      "precision": 0.4666666666666667,
+      "recall": 0.020588235294117647
+    },
+    {
+      "threshold": 0.7,
+      "routed_share": 0.0,
+      "precision": null,
+      "recall": 0.0
+    },
+    {
+      "threshold": 0.8,
+      "routed_share": 0.0,
+      "precision": null,
+      "recall": 0.0
+    }
+  ],
+  "top_features": [
+    {
+      "feature": "p_pri_LOW",
+      "mean_abs_contrib": 0.10678319056656459
+    },
+    {
+      "feature": "prior_tickets_7d",
+      "mean_abs_contrib": 0.07874663639608043
+    },
+    {
+      "feature": "tier",
+      "mean_abs_contrib": 0.06636585021082822
+    },
+    {
+      "feature": "p_pri_URGENT",
+      "mean_abs_contrib": 0.036404854275241205
+    },
+    {
+      "feature": "p_pri_HIGH",
+      "mean_abs_contrib": 0.019479933309188426
+    },
+    {
+      "feature": "p_pri_MEDIUM",
+      "mean_abs_contrib": 0.011534202326194867
+    },
+    {
+      "feature": "emb_pc19",
+      "mean_abs_contrib": 0.009235114359486447
+    },
+    {
+      "feature": "similar_recent",
+      "mean_abs_contrib": 0.007573124136155649
+    },
+    {
+      "feature": "emb_pc13",
+      "mean_abs_contrib": 0.007043757946657244
+    },
+    {
+      "feature": "emb_pc11",
+      "mean_abs_contrib": 0.006350802217204653
+    },
+    {
+      "feature": "emb_pc4",
+      "mean_abs_contrib": 0.006128071907823088
+    },
+    {
+      "feature": "emb_pc9",
+      "mean_abs_contrib": 0.005148552217789871
+    }
+  ],
+  "latency_b1": {
+    "batch": 1,
+    "p50_ms": 1.3196999789215624,
+    "p95_ms": 1.6587750433245676,
+    "per_ticket_ms": 1.3132383334838476
+  },
+  "version": "20260925-222300"
+}

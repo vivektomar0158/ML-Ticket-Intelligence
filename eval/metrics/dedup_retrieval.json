@@ -1,0 +1,186 @@
+{
+  "dedup": {
+    "val": [
+      {
+        "threshold": 0.5,
+        "incident_precision": 0.10494893951296151,
+        "incident_recall": 1.0,
+        "incident_f1": 0.18996160955495522,
+        "same_root_cause_precision": 0.42922230950510604,
+        "pairs": 6365
+      },
+      {
+        "threshold": 0.55,
+        "incident_precision": 0.12937783271528636,
+        "incident_recall": 0.9401197604790419,
+        "incident_f1": 0.22745382107931908,
+        "same_root_cause_precision": 0.5510918829831067,
+        "pairs": 4854
+      },
+      {
+        "threshold": 0.6,
+        "incident_precision": 0.14454797280282045,
+        "incident_recall": 0.8592814371257484,
+        "incident_f1": 0.24746712653589134,
+        "same_root_cause_precision": 0.6557542180810879,
+        "pairs": 3971
+      },
+      {
+        "threshold": 0.65,
+        "incident_precision": 0.1442278860569715,
+        "incident_recall": 0.7200598802395209,
+        "incident_f1": 0.24031976017986506,
+        "same_root_cause_precision": 0.7397301349325337,
+        "pairs": 3335
+      },
+      {
+        "threshold": 0.7,
+        "incident_precision": 0.12812276945039258,
+        "incident_recall": 0.5374251497005988,
+        "incident_f1": 0.2069164265129683,
+        "same_root_cause_precision": 0.8012134189864383,
+        "pairs": 2802
+      },
+      {
+        "threshold": 0.75,
+        "incident_precision": 0.09907935116177115,
+        "incident_recall": 0.3383233532934132,
+        "incident_f1": 0.1532722956934554,
+        "same_root_cause_precision": 0.8452433143358177,
+        "pairs": 2281
+      },
+      {
+        "threshold": 0.8,
+        "incident_precision": 0.07510599636583888,
+        "incident_recall": 0.18562874251497005,
+        "incident_f1": 0.1069426476929711,
+        "same_root_cause_precision": 0.8921865536038764,
+        "pairs": 1651
+      },
+      {
+        "threshold": 0.85,
+        "incident_precision": 0.050761421319796954,
+        "incident_recall": 0.0748502994011976,
+        "incident_f1": 0.06049606775559588,
+        "same_root_cause_precision": 0.9045685279187817,
+        "pairs": 985
+      },
+      {
+        "threshold": 0.9,
+        "incident_precision": 0.025787965616045846,
+        "incident_recall": 0.01347305389221557,
+        "incident_f1": 0.017699115044247787,
+        "same_root_cause_precision": 0.8825214899713467,
+        "pairs": 349
+      }
+    ],
+    "test": [
+      {
+        "threshold": 0.5,
+        "incident_precision": 0.19951051090424368,
+        "incident_recall": 1.0,
+        "incident_f1": 0.3326532099395176,
+        "same_root_cause_precision": 0.36440715003714874,
+        "pairs": 22881
+      },
+      {
+        "threshold": 0.55,
+        "incident_precision": 0.2633830431941061,
+        "incident_recall": 0.9710843373493976,
+        "incident_f1": 0.4143765189755094,
+        "same_root_cause_precision": 0.48642386073317095,
+        "pairs": 16831
+      },
+      {
+        "threshold": 0.6,
+        "incident_precision": 0.3173510744054447,
+        "incident_recall": 0.9090909090909091,
+        "incident_f1": 0.47046820088425345,
+        "same_root_cause_precision": 0.6009023476332492,
+        "pairs": 13077
+      },
+      {
+        "threshold": 0.65,
+        "incident_precision": 0.34314280324467084,
+        "incident_recall": 0.796933187294633,
+        "incident_f1": 0.47972572031383925,
+        "same_root_cause_precision": 0.6827956989247311,
+        "pairs": 10602
+      },
+      {
+        "threshold": 0.7,
+        "incident_precision": 0.3484638484638485,
+        "incident_recall": 0.6608981380065717,
+        "incident_f1": 0.4563260984647962,
+        "same_root_cause_precision": 0.7405867405867406,
+        "pairs": 8658
+      },
+      {
+        "threshold": 0.75,
+        "incident_precision": 0.33988721231519586,
+        "incident_recall": 0.488499452354874,
+        "incident_f1": 0.4008628437893223,
+        "same_root_cause_precision": 0.7927145252248133,
+        "pairs": 6561
+      },
+      {
+        "threshold": 0.8,
+        "incident_precision": 0.3363657569395848,
+        "incident_recall": 0.31588170865279297,
+        "incident_f1": 0.3258020786262991,
+        "same_root_cause_precision": 0.8663400979706088,
+        "pairs": 4287
+      },
+      {
+        "threshold": 0.85,
+        "incident_precision": 0.3293051359516616,
+        "incident_recall": 0.16714129244249726,
+        "incident_f1": 0.22173786689915723,
+        "same_root_cause_precision": 0.9041864479930946,
+        "pairs": 2317
+      },
+      {
+        "threshold": 0.9,
+        "incident_precision": 0.34054054054054056,
+        "incident_recall": 0.0552026286966046,
+        "incident_f1": 0.09500471253534401,
+        "same_root_cause_precision": 0.9135135135135135,
+        "pairs": 740
+      }
+    ],
+    "chosen_threshold": 0.6,
+    "test_at_chosen": {
+      "threshold": 0.6,
+      "incident_precision": 0.3173510744054447,
+      "incident_recall": 0.9090909090909091,
+      "incident_f1": 0.47046820088425345,
+      "same_root_cause_precision": 0.6009023476332492,
+      "pairs": 13077
+    }
+  },
+  "retrieval": {
+    "vector": {
+      "recall@1": 0.9657772621809745,
+      "recall@3": 0.9831786542923434,
+      "recall@5": 0.9872389791183295,
+      "recall@10": 0.9918793503480279,
+      "mrr": 0.9755458728010102
+    },
+    "keyword_bm25": {
+      "recall@1": 0.9408352668213457,
+      "recall@3": 0.9738979118329466,
+      "recall@5": 0.9831786542923434,
+      "recall@10": 0.9895591647331786,
+      "mrr": 0.9590980457696546
+    },
+    "hybrid_rrf": {
+      "recall@1": 0.9669373549883991,
+      "recall@3": 0.9866589327146171,
+      "recall@5": 0.9907192575406032,
+      "recall@10": 0.994199535962877,
+      "mrr": 0.9778032978993467
+    },
+    "n_queries": 1724,
+    "note": "relevant = same root cause; keyword leg is BM25 (proxy for Postgres full-text)."
+  }
+}

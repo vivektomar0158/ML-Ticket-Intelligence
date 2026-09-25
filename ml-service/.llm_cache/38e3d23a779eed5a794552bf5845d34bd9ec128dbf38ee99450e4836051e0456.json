@@ -1,0 +1,1 @@
+{"data": {"category": "BILLING", "priority": "HIGH", "confidence": 0.98, "rationale": "The customer is reporting an unrecognized charge on their account despite being on the free plan, which blocks their accounting reconciliation."}, "meta": {"model": "gemini-flash-lite-latest", "latency_ms": 1259, "input_tokens": 391, "output_tokens": 61, "cost_usd": 6.35e-05}}
