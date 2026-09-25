@@ -1,0 +1,13 @@
+.env
+__pycache__/
+.venv/
+*.pyc
+target/
+node_modules/
+dist/
+data/raw/
+data/processed/
+ml-service/artifacts/
+.idea/
+.vscode/
+*.log
