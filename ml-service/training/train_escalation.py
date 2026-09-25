@@ -19,7 +19,8 @@ from sklearn.preprocessing import StandardScaler
 
 from app.features.text import FEATURE_NAMES, extract_matrix
 from training.common import (epoch_s, ART, CATEGORIES, PRIORITIES, ece, latency_ms, load_tickets, new_version, save_metrics)
-from training.train_priority import build, tfidf_pipeline
+from app.models.priority import build
+from training.train_category import tfidf_pipeline
 
 PRODUCTS = ["web-app", "mobile-app", "api", "desktop-sync", "admin-console"]
 TIER_ORD = {"FREE": 0, "PRO": 1, "ENTERPRISE": 2}
@@ -149,7 +150,7 @@ def main():
     d.mkdir(parents=True, exist_ok=True)
     joblib.dump({"gbm": gbm, "platt": platt, "pca": pca, "names": names, "category_lr": cat_m, "priority": {
         "feat": feat, "scaler": scaler, "lr": pri_m}, "dedup_tau": DEDUP_TAU, "dedup_window_h": DEDUP_WINDOW_H}, d / "escalation.joblib")
-    (d / "meta.json").write_text(json.dumps({"version": ver, "features": names, "threshold_senior": 0.5}))
+    (d / "meta.json").write_text(json.dumps({"version": ver, "features": names, "threshold_senior": 0.4}))
     (ART / "escalation" / "CURRENT").write_text(ver)
     out["version"] = ver
     save_metrics("escalation", out)

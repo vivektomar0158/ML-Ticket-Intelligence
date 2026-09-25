@@ -6,28 +6,13 @@ import json
 
 import joblib
 import numpy as np
-from scipy.sparse import csr_matrix, hstack
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, f1_score
 from sklearn.preprocessing import StandardScaler
 
-from app.features.text import extract_matrix
+from app.models.priority import TIERS, build
 from training.common import ART, PRIORITIES, latency_ms, load_tickets, multiclass_ece, new_version, save_metrics
 from training.train_category import tfidf_pipeline
-
-TIERS = ["FREE", "PRO", "ENTERPRISE"]
-
-
-def tier_onehot(tiers):
-    return np.array([[t == k for k in TIERS] for t in tiers], dtype=np.float32)
-
-
-def build(feat, scaler, texts, tiers, fit=False):
-    S = extract_matrix(list(texts))
-    S = scaler.fit_transform(S) if fit else scaler.transform(S)
-    Xt = feat.fit_transform(list(texts)) if fit else feat.transform(list(texts))
-    return hstack([Xt, csr_matrix(S), csr_matrix(tier_onehot(tiers))]).tocsr()
-
 
 def urgent_metrics(y_idx, pred):
     u = PRIORITIES.index("URGENT")

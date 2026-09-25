@@ -7,7 +7,7 @@ _vader = SentimentIntensityAnalyzer()
 
 DEADLINE = re.compile(
     r"\b(asap|immediately|right now|urgent(ly)?|deadline|by (eod|end of (the )?(day|week))|"
-    r"(by|before|until|due|within)\s+(the\s+)?(\d{1,2}(:\d{2})?\s?(am|pm)|today|tonight|tomorrow|monday|tuesday|wednesday|"
+    r"(by|before|until|due|within)\s+((the|my|our|your)\s+)?(\d{1,2}(:\d{2})?\s?(am|pm)|today|tonight|tomorrow|monday|tuesday|wednesday|"
     r"thursday|friday|noon|midnight|the weekend|\d+\s+(hours?|minutes?))|"
     r"(demo|audit|payroll|launch|presentation|board meeting|renewal|go-live|release)\b.{0,30}\b(today|tonight|tomorrow|friday|monday|\d{1,2}\s?(am|pm)))",
     re.I)

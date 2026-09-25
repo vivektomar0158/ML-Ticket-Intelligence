@@ -1,0 +1,1107 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "Ticket Intelligence ML Service",
+  "version": "1.0.0"
+ },
+ "paths": {
+  "/metrics": {
+   "get": {
+    "summary": "Metrics",
+    "description": "Endpoint that serves Prometheus metrics.",
+    "operationId": "metrics_metrics_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     }
+    }
+   }
+  },
+  "/health/live": {
+   "get": {
+    "summary": "Live",
+    "operationId": "live_health_live_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "type": "object",
+         "title": "Response Live Health Live Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/health/ready": {
+   "get": {
+    "summary": "Ready",
+    "operationId": "ready_health_ready_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/models": {
+   "get": {
+    "summary": "Models",
+    "operationId": "models_v1_models_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "type": "object",
+         "title": "Response Models V1 Models Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/analyze": {
+   "post": {
+    "summary": "Analyze",
+    "operationId": "analyze_v1_analyze_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AnalyzeRequest"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AnalyzeResponse"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/escalation": {
+   "post": {
+    "summary": "Escalation",
+    "operationId": "escalation_v1_escalation_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/EscalationRequest"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EscalationResponse"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/embed": {
+   "post": {
+    "summary": "Embed",
+    "operationId": "embed_v1_embed_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/EmbedRequest"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EmbedResponse"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/llm/classify": {
+   "post": {
+    "summary": "Llm Classify",
+    "operationId": "llm_classify_v1_llm_classify_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/LlmClassifyRequest"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/LlmClassifyResponse"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/llm/draft": {
+   "post": {
+    "summary": "Llm Draft",
+    "operationId": "llm_draft_v1_llm_draft_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/DraftRequest"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DraftResponse"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/llm/judge": {
+   "post": {
+    "summary": "Llm Judge",
+    "operationId": "llm_judge_v1_llm_judge_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/JudgeRequest"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/JudgeResponse"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "AnalyzeItem": {
+    "properties": {
+     "ticketId": {
+      "type": "integer",
+      "title": "Ticketid"
+     },
+     "embedding": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "number"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Embedding"
+     },
+     "embeddingModel": {
+      "type": "string",
+      "title": "Embeddingmodel"
+     },
+     "category": {
+      "$ref": "#/components/schemas/CategoryPred"
+     },
+     "priority": {
+      "$ref": "#/components/schemas/PriorityPred"
+     },
+     "needsLlm": {
+      "type": "boolean",
+      "title": "Needsllm"
+     }
+    },
+    "type": "object",
+    "required": [
+     "ticketId",
+     "embeddingModel",
+     "category",
+     "priority",
+     "needsLlm"
+    ],
+    "title": "AnalyzeItem"
+   },
+   "AnalyzeRequest": {
+    "properties": {
+     "tickets": {
+      "items": {
+       "$ref": "#/components/schemas/TicketIn"
+      },
+      "type": "array",
+      "maxItems": 128,
+      "minItems": 1,
+      "title": "Tickets"
+     },
+     "includeEmbedding": {
+      "type": "boolean",
+      "title": "Includeembedding",
+      "default": true
+     }
+    },
+    "type": "object",
+    "required": [
+     "tickets"
+    ],
+    "title": "AnalyzeRequest"
+   },
+   "AnalyzeResponse": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/AnalyzeItem"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "latencyMs": {
+      "type": "number",
+      "title": "Latencyms"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "latencyMs"
+    ],
+    "title": "AnalyzeResponse"
+   },
+   "CategoryPred": {
+    "properties": {
+     "label": {
+      "type": "string",
+      "title": "Label"
+     },
+     "confidence": {
+      "type": "number",
+      "title": "Confidence"
+     },
+     "model": {
+      "type": "string",
+      "title": "Model"
+     },
+     "probs": {
+      "additionalProperties": {
+       "type": "number"
+      },
+      "type": "object",
+      "title": "Probs"
+     }
+    },
+    "type": "object",
+    "required": [
+     "label",
+     "confidence",
+     "model",
+     "probs"
+    ],
+    "title": "CategoryPred"
+   },
+   "CitationOut": {
+    "properties": {
+     "ticketId": {
+      "type": "integer",
+      "title": "Ticketid"
+     },
+     "why": {
+      "type": "string",
+      "title": "Why"
+     }
+    },
+    "type": "object",
+    "required": [
+     "ticketId",
+     "why"
+    ],
+    "title": "CitationOut"
+   },
+   "Contribution": {
+    "properties": {
+     "feature": {
+      "type": "string",
+      "title": "Feature"
+     },
+     "contribution": {
+      "type": "number",
+      "title": "Contribution"
+     }
+    },
+    "type": "object",
+    "required": [
+     "feature",
+     "contribution"
+    ],
+    "title": "Contribution"
+   },
+   "DraftRequest": {
+    "properties": {
+     "ticket": {
+      "$ref": "#/components/schemas/DraftTicket"
+     },
+     "sources": {
+      "items": {
+       "$ref": "#/components/schemas/Source"
+      },
+      "type": "array",
+      "maxItems": 8,
+      "title": "Sources"
+     },
+     "instruction": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 300
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Instruction"
+     }
+    },
+    "type": "object",
+    "required": [
+     "ticket"
+    ],
+    "title": "DraftRequest"
+   },
+   "DraftResponse": {
+    "properties": {
+     "reply": {
+      "type": "string",
+      "title": "Reply"
+     },
+     "citations": {
+      "items": {
+       "$ref": "#/components/schemas/CitationOut"
+      },
+      "type": "array",
+      "title": "Citations"
+     },
+     "confidence": {
+      "type": "number",
+      "title": "Confidence"
+     },
+     "needsInfo": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Needsinfo"
+     },
+     "grounding": {
+      "type": "string",
+      "title": "Grounding"
+     },
+     "strippedCitations": {
+      "type": "integer",
+      "title": "Strippedcitations"
+     },
+     "meta": {
+      "$ref": "#/components/schemas/LlmMeta"
+     }
+    },
+    "type": "object",
+    "required": [
+     "reply",
+     "citations",
+     "confidence",
+     "needsInfo",
+     "grounding",
+     "strippedCitations",
+     "meta"
+    ],
+    "title": "DraftResponse"
+   },
+   "DraftTicket": {
+    "properties": {
+     "subject": {
+      "type": "string",
+      "title": "Subject"
+     },
+     "body": {
+      "type": "string",
+      "title": "Body"
+     },
+     "category": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Category"
+     },
+     "priority": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Priority"
+     },
+     "isIncident": {
+      "type": "boolean",
+      "title": "Isincident",
+      "default": false
+     },
+     "clusterSize": {
+      "type": "integer",
+      "title": "Clustersize",
+      "default": 1
+     }
+    },
+    "type": "object",
+    "required": [
+     "subject",
+     "body"
+    ],
+    "title": "DraftTicket"
+   },
+   "EmbedRequest": {
+    "properties": {
+     "texts": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "maxItems": 256,
+      "minItems": 1,
+      "title": "Texts"
+     }
+    },
+    "type": "object",
+    "required": [
+     "texts"
+    ],
+    "title": "EmbedRequest"
+   },
+   "EmbedResponse": {
+    "properties": {
+     "embeddings": {
+      "items": {
+       "items": {
+        "type": "number"
+       },
+       "type": "array"
+      },
+      "type": "array",
+      "title": "Embeddings"
+     },
+     "model": {
+      "type": "string",
+      "title": "Model"
+     }
+    },
+    "type": "object",
+    "required": [
+     "embeddings",
+     "model"
+    ],
+    "title": "EmbedResponse"
+   },
+   "EscalationIn": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "subject": {
+      "type": "string",
+      "title": "Subject"
+     },
+     "body": {
+      "type": "string",
+      "title": "Body"
+     },
+     "tier": {
+      "type": "string",
+      "title": "Tier",
+      "default": "FREE"
+     },
+     "product": {
+      "type": "string",
+      "title": "Product",
+      "default": "web-app"
+     },
+     "hour": {
+      "type": "integer",
+      "maximum": 23.0,
+      "minimum": 0.0,
+      "title": "Hour"
+     },
+     "weekday": {
+      "type": "integer",
+      "maximum": 6.0,
+      "minimum": 0.0,
+      "title": "Weekday"
+     },
+     "priorTickets7d": {
+      "type": "integer",
+      "title": "Priortickets7D",
+      "default": 0
+     },
+     "similarRecent": {
+      "type": "integer",
+      "title": "Similarrecent",
+      "default": 0
+     },
+     "embedding": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "number"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Embedding"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "subject",
+     "body",
+     "hour",
+     "weekday"
+    ],
+    "title": "EscalationIn"
+   },
+   "EscalationItem": {
+    "properties": {
+     "ticketId": {
+      "type": "integer",
+      "title": "Ticketid"
+     },
+     "risk": {
+      "type": "number",
+      "title": "Risk"
+     },
+     "rawScore": {
+      "type": "number",
+      "title": "Rawscore"
+     },
+     "route": {
+      "type": "string",
+      "title": "Route"
+     },
+     "topFactors": {
+      "items": {
+       "$ref": "#/components/schemas/Contribution"
+      },
+      "type": "array",
+      "title": "Topfactors"
+     },
+     "model": {
+      "type": "string",
+      "title": "Model"
+     }
+    },
+    "type": "object",
+    "required": [
+     "ticketId",
+     "risk",
+     "rawScore",
+     "route",
+     "topFactors",
+     "model"
+    ],
+    "title": "EscalationItem"
+   },
+   "EscalationRequest": {
+    "properties": {
+     "tickets": {
+      "items": {
+       "$ref": "#/components/schemas/EscalationIn"
+      },
+      "type": "array",
+      "maxItems": 128,
+      "minItems": 1,
+      "title": "Tickets"
+     }
+    },
+    "type": "object",
+    "required": [
+     "tickets"
+    ],
+    "title": "EscalationRequest"
+   },
+   "EscalationResponse": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/EscalationItem"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "seniorThreshold": {
+      "type": "number",
+      "title": "Seniorthreshold"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "seniorThreshold"
+    ],
+    "title": "EscalationResponse"
+   },
+   "HTTPValidationError": {
+    "properties": {
+     "detail": {
+      "items": {
+       "$ref": "#/components/schemas/ValidationError"
+      },
+      "type": "array",
+      "title": "Detail"
+     }
+    },
+    "type": "object",
+    "title": "HTTPValidationError"
+   },
+   "JudgeRequest": {
+    "properties": {
+     "ticket": {
+      "$ref": "#/components/schemas/DraftTicket"
+     },
+     "draft": {
+      "type": "string",
+      "title": "Draft"
+     },
+     "sources": {
+      "items": {
+       "$ref": "#/components/schemas/Source"
+      },
+      "type": "array",
+      "title": "Sources"
+     },
+     "goldFix": {
+      "type": "string",
+      "title": "Goldfix"
+     }
+    },
+    "type": "object",
+    "required": [
+     "ticket",
+     "draft",
+     "goldFix"
+    ],
+    "title": "JudgeRequest"
+   },
+   "JudgeResponse": {
+    "properties": {
+     "groundedness": {
+      "type": "integer",
+      "title": "Groundedness"
+     },
+     "correctness": {
+      "type": "integer",
+      "title": "Correctness"
+     },
+     "completeness": {
+      "type": "integer",
+      "title": "Completeness"
+     },
+     "tone": {
+      "type": "integer",
+      "title": "Tone"
+     },
+     "rationale": {
+      "type": "string",
+      "title": "Rationale"
+     },
+     "meta": {
+      "$ref": "#/components/schemas/LlmMeta"
+     }
+    },
+    "type": "object",
+    "required": [
+     "groundedness",
+     "correctness",
+     "completeness",
+     "tone",
+     "rationale",
+     "meta"
+    ],
+    "title": "JudgeResponse"
+   },
+   "LlmClassifyRequest": {
+    "properties": {
+     "subject": {
+      "type": "string",
+      "title": "Subject"
+     },
+     "body": {
+      "type": "string",
+      "title": "Body"
+     }
+    },
+    "type": "object",
+    "required": [
+     "subject",
+     "body"
+    ],
+    "title": "LlmClassifyRequest"
+   },
+   "LlmClassifyResponse": {
+    "properties": {
+     "category": {
+      "type": "string",
+      "title": "Category"
+     },
+     "priority": {
+      "type": "string",
+      "title": "Priority"
+     },
+     "confidence": {
+      "type": "number",
+      "title": "Confidence"
+     },
+     "rationale": {
+      "type": "string",
+      "title": "Rationale"
+     },
+     "meta": {
+      "$ref": "#/components/schemas/LlmMeta"
+     }
+    },
+    "type": "object",
+    "required": [
+     "category",
+     "priority",
+     "confidence",
+     "rationale",
+     "meta"
+    ],
+    "title": "LlmClassifyResponse"
+   },
+   "LlmMeta": {
+    "properties": {
+     "model": {
+      "type": "string",
+      "title": "Model"
+     },
+     "latencyMs": {
+      "type": "integer",
+      "title": "Latencyms"
+     },
+     "inputTokens": {
+      "type": "integer",
+      "title": "Inputtokens"
+     },
+     "outputTokens": {
+      "type": "integer",
+      "title": "Outputtokens"
+     },
+     "costUsd": {
+      "type": "number",
+      "title": "Costusd"
+     },
+     "cached": {
+      "type": "boolean",
+      "title": "Cached"
+     },
+     "promptVersion": {
+      "type": "string",
+      "title": "Promptversion"
+     }
+    },
+    "type": "object",
+    "required": [
+     "model",
+     "latencyMs",
+     "inputTokens",
+     "outputTokens",
+     "costUsd",
+     "cached",
+     "promptVersion"
+    ],
+    "title": "LlmMeta"
+   },
+   "PriorityPred": {
+    "properties": {
+     "label": {
+      "type": "string",
+      "title": "Label"
+     },
+     "confidence": {
+      "type": "number",
+      "title": "Confidence"
+     },
+     "model": {
+      "type": "string",
+      "title": "Model"
+     },
+     "signals": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Signals"
+     },
+     "probs": {
+      "additionalProperties": {
+       "type": "number"
+      },
+      "type": "object",
+      "title": "Probs"
+     }
+    },
+    "type": "object",
+    "required": [
+     "label",
+     "confidence",
+     "model",
+     "signals",
+     "probs"
+    ],
+    "title": "PriorityPred"
+   },
+   "Source": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "subject": {
+      "type": "string",
+      "title": "Subject"
+     },
+     "problem": {
+      "type": "string",
+      "title": "Problem"
+     },
+     "resolution": {
+      "type": "string",
+      "title": "Resolution"
+     },
+     "score": {
+      "type": "number",
+      "title": "Score",
+      "default": 0.0
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "subject",
+     "problem",
+     "resolution"
+    ],
+    "title": "Source"
+   },
+   "TicketIn": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "subject": {
+      "type": "string",
+      "maxLength": 500,
+      "title": "Subject"
+     },
+     "body": {
+      "type": "string",
+      "maxLength": 20000,
+      "title": "Body"
+     },
+     "tier": {
+      "type": "string",
+      "title": "Tier",
+      "default": "FREE"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "subject",
+     "body"
+    ],
+    "title": "TicketIn"
+   },
+   "ValidationError": {
+    "properties": {
+     "loc": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "integer"
+        }
+       ]
+      },
+      "type": "array",
+      "title": "Location"
+     },
+     "msg": {
+      "type": "string",
+      "title": "Message"
+     },
+     "type": {
+      "type": "string",
+      "title": "Error Type"
+     },
+     "input": {
+      "title": "Input"
+     },
+     "ctx": {
+      "type": "object",
+      "title": "Context"
+     }
+    },
+    "type": "object",
+    "required": [
+     "loc",
+     "msg",
+     "type"
+    ],
+    "title": "ValidationError"
+   }
+  }
+ }
+}

@@ -1,0 +1,1 @@
+{"data": {"reply": "Hi, thanks for reaching out and sorry for the trouble. We are investigating; could you share when this started and any error message you see?", "citations": [], "confidence": 0.2, "needsInfo": ["When did this start?", "Any error message?"]}, "meta": {"model": "mock", "latency_ms": 1, "input_tokens": 0, "output_tokens": 0, "cost_usd": 0.0}}
