@@ -374,8 +374,9 @@ class PipelineIT {
             Res r = call("GET", "/api/tickets?limit=10&sort=risk" + (cursor == null ? "" : "&cursor=" + cursor), null, agent);
             for (JsonNode t : r.body().path("items")) {
                 assertThat(seen.add(t.path("id").asLong())).isTrue();          // no duplicates across pages
-                assertThat(t.path("escalationRisk").asDouble(-1)).isLessThanOrEqualTo(lastRisk + 1e-9);
-                lastRisk = t.path("escalationRisk").asDouble(-1);
+                assertThat(t.path("escalation_risk").isNumber()).isTrue();
+                assertThat(t.path("escalation_risk").asDouble()).isLessThanOrEqualTo(lastRisk + 1e-9);   // strictly ordered by risk across pages
+                lastRisk = t.path("escalation_risk").asDouble();
             }
             cursor = r.body().path("nextCursor").isNull() ? null : r.body().path("nextCursor").stringValue(null);
             pages++;
@@ -390,6 +391,11 @@ class PipelineIT {
 
     @Test
     void metricsOverviewAndAdminEndpointsRespond() throws Exception {
+        var h = new java.util.LinkedHashMap<String, Object>();       // seeded history must NOT count as live traffic
+        h.put("externalId", "H-M1"); h.put("createdAt", "2026-05-01T10:00:00Z"); h.put("customerId", "HC9"); h.put("customerTier", "PRO");
+        h.put("product", "web-app"); h.put("subject", "old"); h.put("body", "old ticket"); h.put("resolution", "old fix applied");
+        h.put("category", "BUG"); h.put("priority", "LOW"); h.put("embedding", FakeMlService.embedding("old"));
+        assertThat(call("POST", "/api/admin/history", List.of(h), login("admin")).status()).isEqualTo(200);
         long id = ingest("Webhook fails", "webhook failing", "C1", "PRO");
         awaitDrafted(id);
         Res m = call("GET", "/api/metrics/overview?days=1", null, login("agent"));

@@ -69,11 +69,11 @@ public class DuplicateService {
             if (sorted.size() > 1) {                                   // several clusters bridged by this ticket -> merge into the oldest
                 String others = sorted.subList(1, sorted.size()).stream().map(String::valueOf).collect(Collectors.joining(","));
                 jdbc.update("UPDATE tickets SET cluster_id = ? WHERE cluster_id IN (" + others + ")", target);
-                jdbc.update("UPDATE duplicate_clusters SET status = 'MERGED', merged_into = ? WHERE id IN (" + others + ")", target);
                 jdbc.update("""
-                        UPDATE duplicate_clusters SET is_incident = is_incident OR EXISTS
-                          (SELECT 1 FROM duplicate_clusters WHERE id IN (%s) AND is_incident) WHERE id = ?
-                        """.formatted(others), target);
+                        UPDATE duplicate_clusters SET is_incident = is_incident OR (SELECT COALESCE(bool_or(is_incident), false) FROM duplicate_clusters WHERE id IN (%s)),
+                          incident_flagged_at = LEAST(incident_flagged_at, (SELECT min(incident_flagged_at) FROM duplicate_clusters WHERE id IN (%s))) WHERE id = ?
+                        """.formatted(others, others), target);
+                jdbc.update("UPDATE duplicate_clusters SET status = 'MERGED', merged_into = ?, size = 0 WHERE id IN (" + others + ")", target);
             }
         }
         List<Long> members = new ArrayList<>(matches.stream().map(Match::id).toList());

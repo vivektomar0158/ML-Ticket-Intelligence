@@ -32,11 +32,11 @@ public class MetricsController {
                 SELECT count(*) AS tickets, count(*) FILTER (WHERE status IN ('RESOLVED','CLOSED')) AS resolved,
                        count(*) FILTER (WHERE queue = 'SENIOR') AS senior_queue, count(*) FILTER (WHERE sla_breached) AS sla_breached,
                        COALESCE(avg(escalation_risk), 0) AS avg_risk
-                FROM tickets WHERE ingested_at >= ?
+                FROM tickets WHERE source <> 'SEED' AND ingested_at >= ?
                 """, since));
-        out.put("volumeByDay", jdbc.queryForList("SELECT date_trunc('day', ingested_at)::date AS day, count(*) AS tickets FROM tickets WHERE ingested_at >= ? GROUP BY 1 ORDER BY 1", since));
-        out.put("categoryMix", jdbc.queryForList("SELECT COALESCE(category, 'UNCLASSIFIED') AS category, count(*) AS tickets FROM tickets WHERE ingested_at >= ? GROUP BY 1 ORDER BY 2 DESC", since));
-        out.put("priorityMix", jdbc.queryForList("SELECT COALESCE(priority, 'UNSET') AS priority, count(*) AS tickets FROM tickets WHERE ingested_at >= ? GROUP BY 1 ORDER BY 2 DESC", since));
+        out.put("volumeByDay", jdbc.queryForList("SELECT to_char(date_trunc('day', ingested_at), 'YYYY-MM-DD') AS day, count(*) AS tickets FROM tickets WHERE source <> 'SEED' AND ingested_at >= ? GROUP BY 1 ORDER BY 1", since));
+        out.put("categoryMix", jdbc.queryForList("SELECT COALESCE(category, 'UNCLASSIFIED') AS category, count(*) AS tickets FROM tickets WHERE source <> 'SEED' AND ingested_at >= ? GROUP BY 1 ORDER BY 2 DESC", since));
+        out.put("priorityMix", jdbc.queryForList("SELECT COALESCE(priority, 'UNSET') AS priority, count(*) AS tickets FROM tickets WHERE source <> 'SEED' AND ingested_at >= ? GROUP BY 1 ORDER BY 2 DESC", since));
         out.put("riskHistogram", jdbc.queryForList("""
                 SELECT width_bucket(escalation_risk, 0, 1, 10) AS bucket, count(*) AS tickets FROM tickets
                 WHERE ingested_at >= ? AND escalation_risk IS NOT NULL GROUP BY 1 ORDER BY 1
@@ -75,8 +75,8 @@ public class MetricsController {
                 FROM drafts WHERE created_at >= ?
                 """, since));
         llm.put("classifyCalls", jdbc.queryForObject("SELECT count(*) FROM predictions WHERE model_name = 'gemini_zeroshot' AND created_at >= ?", Long.class, since));
-        llm.put("llmClassifiedShare", jdbc.queryForObject("SELECT COALESCE(avg((category_source = 'LLM')::int), 0) FROM tickets WHERE ingested_at >= ? AND category IS NOT NULL", Double.class, since));
-        llm.put("costByDay", jdbc.queryForList("SELECT created_at::date AS day, sum(cost_usd) AS cost_usd, count(*) AS calls FROM drafts WHERE created_at >= ? AND cost_usd > 0 GROUP BY 1 ORDER BY 1", since));
+        llm.put("llmClassifiedShare", jdbc.queryForObject("SELECT COALESCE(avg((category_source = 'LLM')::int), 0) FROM tickets WHERE source <> 'SEED' AND ingested_at >= ? AND category IS NOT NULL", Double.class, since));
+        llm.put("costByDay", jdbc.queryForList("SELECT to_char(created_at, 'YYYY-MM-DD') AS day, sum(cost_usd) AS cost_usd, count(*) AS calls FROM drafts WHERE created_at >= ? AND cost_usd > 0 GROUP BY 1 ORDER BY 1", since));
         out.put("llm", llm);
 
         // ---- classification quality from agent corrections
@@ -89,12 +89,12 @@ public class MetricsController {
         out.put("latencySeconds", jdbc.queryForMap("""
                 SELECT COALESCE(percentile_cont(0.5) WITHIN GROUP (ORDER BY EXTRACT(EPOCH FROM (triaged_at - ingested_at))), 0) AS triage_p50,
                        COALESCE(percentile_cont(0.95) WITHIN GROUP (ORDER BY EXTRACT(EPOCH FROM (triaged_at - ingested_at))), 0) AS triage_p95
-                FROM tickets WHERE ingested_at >= ? AND triaged_at IS NOT NULL
+                FROM tickets WHERE source <> 'SEED' AND ingested_at >= ? AND triaged_at IS NOT NULL
                 """, since));
         out.put("draftLatencySeconds", jdbc.queryForMap("""
                 SELECT COALESCE(percentile_cont(0.5) WITHIN GROUP (ORDER BY EXTRACT(EPOCH FROM (drafted_at - ingested_at))), 0) AS draft_p50,
                        COALESCE(percentile_cont(0.95) WITHIN GROUP (ORDER BY EXTRACT(EPOCH FROM (drafted_at - ingested_at))), 0) AS draft_p95
-                FROM tickets WHERE ingested_at >= ? AND drafted_at IS NOT NULL
+                FROM tickets WHERE source <> 'SEED' AND ingested_at >= ? AND drafted_at IS NOT NULL
                 """, since));
         out.put("queues", jobs.depthByStatus());
         out.put("activeIncidents", jdbc.queryForObject("SELECT count(*) FROM duplicate_clusters WHERE is_incident AND status = 'ACTIVE'", Long.class));

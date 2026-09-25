@@ -1,0 +1,1 @@
+{"data": {"category": "BILLING", "priority": "MEDIUM", "confidence": 0.7, "rationale": "mock keyword rules"}, "meta": {"model": "mock", "latency_ms": 1, "input_tokens": 0, "output_tokens": 0, "cost_usd": 0.0}}
