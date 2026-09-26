@@ -4,7 +4,7 @@ Generated 2026-09-26 by `eval/build_report.py` from `eval/metrics/*.json`. Every
 
 > **Read this first.** The data is synthetic (Gemini-written tickets from known root causes), so absolute scores are optimistic. Section 2 quantifies exactly how optimistic. The Gemini-dependent measurements were run on small samples because the API key is on the free tier (20 requests/day per model on most models); those rows are marked and can be extended by re-running the same scripts after the quota resets.
 
-## 0. Scorecard vs the targets in the plan
+## 0. Scorecard vs the project targets
 
 | Area | Target | Result | Verdict |
 |---|---|---|---|

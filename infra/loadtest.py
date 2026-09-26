@@ -1,7 +1,7 @@
 """Load test: steady traffic, then a 500-ticket outage-style burst. Measures ingest latency and time-to-triage / time-to-draft.
 
   scripts/reset-live.sh && uv run --project ml-service python infra/loadtest.py
-Targets (plan section 1): ingest p95 < 50 ms; triage p95 < 2 s at normal load; draft p95 < 15 s; 500-ticket burst triaged < 60 s.
+Targets: ingest p95 < 50 ms; triage p95 < 2 s at normal load; draft p95 < 15 s; 500-ticket burst triaged < 60 s.
 """
 import argparse
 import json

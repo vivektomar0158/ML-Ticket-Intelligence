@@ -37,30 +37,40 @@ The data is synthetic, so **read the robustness rows first**.
 
 ## Run it
 
-Prerequisites: Docker, and (for retraining/eval) Python 3.11+ with [`uv`](https://docs.astral.sh/uv/). Java 17 + Node 20 only if you run outside Docker.
+**Prerequisites:** Docker Desktop (running), and [`uv`](https://docs.astral.sh/uv/) with Python 3.11+ for the data/model steps and the seed scripts. Java 17 and Node 20 are only needed if you run the apps outside Docker. Commands below are Git Bash / macOS / Linux; in Windows `cmd` use `copy` instead of `cp` and `mvnw` instead of `./mvnw`.
+
+### Step 0: build the models and data (one time)
+
+The trained models (`ml-service/artifacts/`) and the dataset (`data/processed/`) are **not in git**, and the ML service will not start without the models. Build them by running the "Reproduce the numbers" steps 1 and 2 below.
+
+> **Heads-up:** step 1 generates ~8,000 synthetic tickets with Gemini (~800 calls). A free-tier key allows only a few dozen calls per model per day, so generation may need several days; it is cached and resumes where it stopped. Use a billing-enabled key to do it in one run (a few dollars).
+
+### Step 1: start the stack
 
 ```bash
-cp .env.example .env            # put GEMINI_API_KEY in it (LLM_PROVIDER=mock in .env runs without any key)
+cp .env.example .env            # put GEMINI_API_KEY in it (or set LLM_PROVIDER=mock to run without any key)
 docker compose up --build       # dashboard http://localhost:8081  ·  API :8080  ·  ML :8000  ·  Postgres :5433
-docker compose --profile observability up   # + Prometheus :9090, Grafana :3000 (dashboard provisioned)
+docker compose --profile observability up   # optional: + Prometheus :9090, Grafana :3000
 ```
 
-Trained model files live in `ml-service/artifacts/` (git-ignored) and the dataset in `data/processed/`. Build them once (needs a Gemini key for the data step; see *Reproduce*), or the ML service will not start.
-
-Load the RAG history and replay traffic (log in as `agent` / `senior` / `admin`, password = username):
+### Step 2: load data and open the dashboard
 
 ```bash
-uv run --project ml-service python scripts/seed.py history              # 6,164 resolved tickets + embeddings
+uv run --project ml-service python scripts/seed.py history              # 6,164 resolved tickets + embeddings (the RAG corpus)
 uv run --project ml-service python scripts/seed.py incident --speed 0   # replay a simulated outage
 uv run --project ml-service python scripts/seed.py replay --n 300       # ordinary traffic
 ```
+
+Open http://localhost:8081 and sign in as `agent` / `senior` / `admin` (password = username). To clear the live tickets and keep the history: `scripts/reset-live.sh` (Git Bash).
+
+> **Security:** the demo users, the default JWT secret and the default ingest key are for local use only. The API logs a warning at startup while they are active. Set `JWT_SECRET`, `INGEST_API_KEY`, `ADMIN_KEY` and `SEED_USERS=false` before exposing it.
 
 ### Local development (no Docker for the apps)
 
 ```bash
 docker compose up -d postgres
 (cd ml-service && uv run uvicorn app.main:app --port 8000)      # LLM_PROVIDER=mock for a key-less run
-(cd api && ./mvnw spring-boot:run)
+(cd api && ./mvnw spring-boot:run)                              # Windows cmd: mvnw spring-boot:run
 (cd dashboard && npm install && npm run dev)                    # http://localhost:5173 (proxies /api)
 ```
 
@@ -92,7 +102,7 @@ uv run --project ml-service python eval/build_report.py
 | API integration (real pgvector via Testcontainers + fake ML server) | `cd api && ./mvnw test` | 22 |
 | Dashboard unit/component | `cd dashboard && npm test` | 26 |
 | Browser E2E against the running stack | `cd dashboard && node e2e/smoke.mjs` | 18 checks |
-| Chaos on real processes | `scripts/chaos.sh` | 9 checks |
+| Chaos on real processes (Git Bash on Windows) | `scripts/chaos.sh` | 9 checks |
 
 ## Design decisions
 
@@ -114,7 +124,7 @@ data/         synthetic-data generator, Bitext prep, data card
 eval/         evaluation report (report.md), pipeline eval, report builder
 infra/        Prometheus / Grafana config, load test
 scripts/      seed + replay, reset, chaos
-docs/         implementation plan, ADRs, ML service OpenAPI contract
+docs/         ADRs, ML service OpenAPI contract
 ```
 
 ## Limitations worth stating
