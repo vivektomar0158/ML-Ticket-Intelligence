@@ -24,6 +24,12 @@ public class SeedUsers implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
+        if (props.security().jwtSecret().startsWith("dev-only-secret") || "dev-ingest-key".equals(props.security().ingestApiKey())) {
+            log.warn("SECURITY: running with the DEFAULT JWT secret / ingest API key. Set JWT_SECRET and INGEST_API_KEY before exposing this service.");
+        }
+        if (props.security().seedUsers()) {
+            log.warn("SECURITY: demo users (agent/senior/admin, password = username) are enabled. Set SEED_USERS=false outside local demos.");
+        }
         if (!props.security().seedUsers()) return;
         String[][] users = {{"agent", "Alex Agent", "AGENT"}, {"agent2", "Sam Support", "AGENT"},
                 {"senior", "Sasha Senior", "SENIOR"}, {"admin", "Ada Admin", "ADMIN"}};
