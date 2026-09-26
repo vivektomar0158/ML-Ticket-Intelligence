@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.context.request.async.AsyncRequestNotUsableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -24,6 +25,12 @@ public class GlobalExceptionHandler {
         String msg = e.getBindingResult().getFieldErrors().stream()
                 .map(f -> f.getField() + " " + f.getDefaultMessage()).collect(Collectors.joining("; "));
         return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, msg);
+    }
+
+    /** A browser closed its SSE connection / navigated away: expected, nothing to report and nothing to write back. */
+    @ExceptionHandler({AsyncRequestNotUsableException.class, java.io.IOException.class})
+    void clientDisconnected(Exception e) {
+        log.debug("client disconnected: {}", e.toString());
     }
 
     @ExceptionHandler(Exception.class)
