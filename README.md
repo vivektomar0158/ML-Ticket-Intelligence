@@ -96,7 +96,7 @@ uv run --project ml-service python eval/build_report.py
 
 ## Design decisions
 
-Short ADRs in [`docs/adr`](docs/adr); the full plan is [`docs/IMPLEMENTATION_PLAN.md`](docs/IMPLEMENTATION_PLAN.md). The ones worth knowing:
+Short ADRs are in [`docs/adr`](docs/adr). The ones worth knowing:
 
 - **Postgres is the queue.** A ticket and its job are committed in one transaction, so nothing is lost between them; no broker to run.
 - **Two-stage pipeline.** Predictions in < 2 s regardless of LLM latency; the slow draft stage has its own workers, priority ordering, load shedding, and **one draft per outage** instead of one per ticket.

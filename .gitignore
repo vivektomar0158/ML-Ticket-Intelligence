@@ -16,3 +16,6 @@ ml-service/artifacts/
 ml-service/.llm_cache/
 ml-service/tests/.llm_cache_test/
 dashboard/e2e/out/
+
+# private planning doc: kept locally, not published
+docs/IMPLEMENTATION_PLAN.md
