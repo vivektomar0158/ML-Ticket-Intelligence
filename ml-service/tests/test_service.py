@@ -155,3 +155,13 @@ def test_grouped_citations_are_normalised_and_validated(client, monkeypatch):
     r = client.post("/v1/llm/draft", json={"ticket": {"subject": "a", "body": "b"}, "sources": SRC}).json()
     assert "[T-881]" in r["reply"] and "[T-999]" not in r["reply"]      # grouped tag split; the invented id is stripped
     assert r["strippedCitations"] >= 1 and r["grounding"] == "WEAK"
+
+
+def test_valid_citations_missing_from_the_text_are_appended(client, monkeypatch):
+    async def fake(prompt, schema, **kw):
+        return ({"reply": "Please clear your SSO session and sign in again.", "confidence": 0.9,
+                 "citations": [{"ticketId": 881, "why": "ok"}], "needsInfo": []},
+                {"model": "x", "latency_ms": 1, "input_tokens": 1, "output_tokens": 1, "cost_usd": 0, "cached": False})
+    monkeypatch.setattr(gemini.gateway, "generate_json", fake)
+    r = client.post("/v1/llm/draft", json={"ticket": {"subject": "a", "body": "b"}, "sources": SRC}).json()
+    assert r["reply"].endswith("[T-881]") and r["strippedCitations"] == 0 and r["grounding"] == "STRONG"

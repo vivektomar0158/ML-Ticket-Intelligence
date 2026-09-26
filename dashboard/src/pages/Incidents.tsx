@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { api } from '../api'
 import { Spark } from '../components/Charts'
-import { timeAgo } from '../lib'
+import { splitCitations, timeAgo } from '../lib'
 import type { ClusterRow } from '../types'
 
 interface ClusterDetail {
@@ -25,7 +25,9 @@ function IncidentCard({ c }: { c: ClusterRow }) {
       {d.data?.draft?.[0]?.body && (
         <div className="stack">
           <h3>Canonical reply (reused for every ticket in this incident)</h3>
-          <div className="draft-view small">{d.data.draft[0].body}</div>
+          <div className="draft-view small">
+            {splitCitations(d.data.draft[0].body).map((p, i) => (p.type === 'text' ? <span key={i}>{p.text}</span> : <span key={i} className="chip cite">T-{p.id}</span>))}
+          </div>
         </div>
       )}
       {d.data?.members?.[0] && <p className="small"><Link to={`/tickets/${d.data.members[0].id}`}>Open latest ticket →</Link> · <Link to={`/?clusterId=${c.id}`}>All members</Link></p>}

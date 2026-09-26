@@ -1,0 +1,1 @@
+{"version": "20260925-231830", "classes": ["ACCOUNT_MANAGEMENT", "BILLING", "BUG", "DATA_PRIVACY", "FEATURE_REQUEST", "INTEGRATION", "LOGIN_ACCESS", "PERFORMANCE"], "embedding": "minilm-l6-v2@1", "tfidf_C": 3, "emb_C": 100, "parent": "20260925-215803", "retrained_on_corrections": 14}

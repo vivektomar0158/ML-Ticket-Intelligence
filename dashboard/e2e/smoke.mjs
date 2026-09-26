@@ -67,7 +67,10 @@ try {
   const tt = await text()
   check(tt.includes('AI analysis') && tt.includes('Escalation'), 'ticket page shows AI analysis and escalation')
   check(/Why this risk|Customer tier|Recent tickets|Ticket wording|Predicted/.test(tt), 'escalation risk is explained with factors')
-  check(await page.$('button.chip.cite') !== null, 'draft shows clickable citation chips')
+  // grounded drafts must show clickable citations; an ungrounded (NONE) draft legitimately has none and must ask questions instead
+  const grounded = /(Strong|Weak) grounding/.test(tt)
+  const chips = (await page.$$('button.chip.cite')).length
+  check(grounded ? chips > 0 : chips === 0, grounded ? `grounded draft shows clickable citation chips (${chips})` : 'ungrounded draft shows no citations')
   check(tt.includes('Similar resolved tickets'), 'similar resolved tickets are listed')
 
   // ---- edit + approve with diff

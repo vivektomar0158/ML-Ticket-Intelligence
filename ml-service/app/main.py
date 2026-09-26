@@ -168,6 +168,10 @@ async def llm_draft(req: DraftRequest):
     for x in bad_tags:
         reply = reply.replace(f"[T-{x}]", "")
     stripped += len(bad_tags)
+    # every valid citation must be visible in the text: models sometimes return the citation list but omit the inline tags
+    missing = [c.ticketId for c in cits if f"[T-{c.ticketId}]" not in reply]
+    if missing:
+        reply = reply.rstrip() + " " + "".join(f"[T-{i}]" for i in missing)
     conf = float(np.clip(d.get("confidence", 0.5), 0, 1))
     if stripped:
         conf = min(conf, 0.5)

@@ -1,6 +1,26 @@
 # Support Ticket Intelligence Platform
 
-Automates the **first pass** on support tickets: classify, score urgency and escalation risk, spot duplicate reports (outages), retrieve similar resolved tickets, and draft a grounded reply. **A human agent approves every reply**; approvals and edits feed a retraining loop.
+[![CI](https://github.com/vivektomar0158/ML-Ticket-Intelligence/actions/workflows/ci.yml/badge.svg)](https://github.com/vivektomar0158/ML-Ticket-Intelligence/actions/workflows/ci.yml)
+
+Support teams get thousands of tickets a day. This system does the **first pass** automatically: it classifies each ticket, scores urgency and escalation risk, spots duplicate reports (outages), retrieves similar resolved tickets, and drafts a **grounded, cited reply**. **A human agent approves every reply**, and their edits feed a retraining loop.
+
+Stack: **Spring Boot 4 (Java 17)** orchestration + **FastAPI** ML service + **PostgreSQL/pgvector** + **React/TypeScript** dashboard, with scikit-learn, LightGBM, sentence-transformers and Gemini.
+
+![demo](docs/screenshots/demo.gif)
+
+| Agent review: cited draft, AI analysis, explained risk | Outage detected: one shared reply for 59 tickets |
+|---|---|
+| ![ticket](docs/screenshots/ticket-review.png) | ![incident](docs/screenshots/incident.png) |
+
+<details><summary>More screenshots</summary>
+
+| Queue | Edit with diff | Metrics |
+|---|---|---|
+| ![queue](docs/screenshots/queue.png) | ![diff](docs/screenshots/edit-diff.png) | ![metrics](docs/screenshots/metrics.png) |
+
+</details>
+
+## What it does
 
 ```
 React dashboard ──► Spring Boot API ──► PostgreSQL + pgvector      (tickets, embeddings, jobs, drafts, feedback)
@@ -20,7 +40,7 @@ React dashboard ──► Spring Boot API ──► PostgreSQL + pgvector      (
 
 ## Results (details and caveats in [`eval/report.md`](eval/report.md))
 
-The data is synthetic, so **read the robustness rows first**.
+The data is synthetic, so **read the robustness rows first**; the honest numbers are the interesting part.
 
 | | Result |
 |---|---|
@@ -32,40 +52,41 @@ The data is synthetic, so **read the robustness rows first**.
 | Retrieval recall@5 / citation precision (end-to-end) | 0.96 / 0.93 |
 | 500-ticket outage burst | fully triaged in 10.8 s; ingest p95 10 ms at steady load |
 | Chaos: ML service killed; API hard-killed with 54 jobs in flight | 0 tickets lost, 0 duplicate predictions |
+| One shared draft per outage | 59 tickets → ~8 LLM calls instead of 59 |
 
-**Not measured:** Gemini on the unseen-issue regime and LLM-judge draft scores (free-tier quota), agent approval rate (no real agents). See the report's §11 for every known gap.
+**Not measured:** Gemini on the unseen-issue regime and LLM-judge draft scores (free-tier quota), and agent approval rate (no real agents). The report's §11 lists every known gap.
 
-## Run it
+## Quick start (about 5 minutes)
 
-**Prerequisites:** Docker Desktop (running), and [`uv`](https://docs.astral.sh/uv/) with Python 3.11+ for the data/model steps and the seed scripts. Java 17 and Node 20 are only needed if you run the apps outside Docker. Commands below are Git Bash / macOS / Linux; in Windows `cmd` use `copy` instead of `cp` and `mvnw` instead of `./mvnw`.
+The trained models (9 MB) and the dataset (24 MB) are **included**, so it runs straight from a clone.
 
-### Step 0: build the models and data (one time)
-
-The trained models (`ml-service/artifacts/`) and the dataset (`data/processed/`) are **not in git**, and the ML service will not start without the models. Build them by running the "Reproduce the numbers" steps 1 and 2 below.
-
-> **Heads-up:** step 1 generates ~8,000 synthetic tickets with Gemini (~800 calls). A free-tier key allows only a few dozen calls per model per day, so generation may need several days; it is cached and resumes where it stopped. Use a billing-enabled key to do it in one run (a few dollars).
-
-### Step 1: start the stack
+**Prerequisites:** Docker Desktop (running) and [`uv`](https://docs.astral.sh/uv/) (only used for the small seed script).
 
 ```bash
-cp .env.example .env            # put GEMINI_API_KEY in it (or set LLM_PROVIDER=mock to run without any key)
-docker compose up --build       # dashboard http://localhost:8081  ·  API :8080  ·  ML :8000  ·  Postgres :5433
-docker compose --profile observability up   # optional: + Prometheus :9090, Grafana :3000
+git clone https://github.com/vivektomar0158/ML-Ticket-Intelligence.git && cd ML-Ticket-Intelligence
+cp .env.example .env            # Windows cmd: copy .env.example .env
+#   add GEMINI_API_KEY to .env for real drafts, or set LLM_PROVIDER=mock to run with no key (template drafts)
+docker compose up --build       # first build takes a few minutes; wait until api + ml-service are "healthy"
 ```
 
-### Step 2: load data and open the dashboard
+Then, in a second terminal, load the resolved-ticket history (the RAG corpus) and some traffic:
 
 ```bash
-uv run --project ml-service python scripts/seed.py history              # 6,164 resolved tickets + embeddings (the RAG corpus)
-uv run --project ml-service python scripts/seed.py incident --speed 0   # replay a simulated outage
-uv run --project ml-service python scripts/seed.py replay --n 300       # ordinary traffic
+SEED="uv run --no-project --with httpx --with pandas --with numpy --with pyarrow python scripts/seed.py"
+$SEED history                    # 6,164 resolved tickets + embeddings
+$SEED incident --speed 0         # replay a simulated SSO outage
+$SEED replay --n 150 --no-incidents
 ```
 
-Open http://localhost:8081 and sign in as `agent` / `senior` / `admin` (password = username). To clear the live tickets and keep the history: `scripts/reset-live.sh` (Git Bash).
+Open **http://localhost:8081** and sign in as `agent` / `senior` / `admin` (password = username).
 
-> **Security:** the demo users, the default JWT secret and the default ingest key are for local use only. The API logs a warning at startup while they are active. Set `JWT_SECRET`, `INGEST_API_KEY`, `ADMIN_KEY` and `SEED_USERS=false` before exposing it.
+- `docker compose --profile observability up` adds Prometheus (:9090) and Grafana (:3000, dashboard provisioned).
+- `scripts/reset-live.sh` (Git Bash) clears live tickets and keeps the history.
+- The Gemini free tier allows only a few dozen calls per model per day. When it runs out, triage keeps working and drafts show "LLM paused" until the quota resets.
 
-### Local development (no Docker for the apps)
+> **Security:** the demo users, the default JWT secret and the default ingest key are for local use only, and the API logs a warning at startup while they are active. Set `JWT_SECRET`, `INGEST_API_KEY`, `ADMIN_KEY` and `SEED_USERS=false` before exposing it.
+
+### Local development (apps outside Docker)
 
 ```bash
 docker compose up -d postgres
@@ -74,13 +95,16 @@ docker compose up -d postgres
 (cd dashboard && npm install && npm run dev)                    # http://localhost:5173 (proxies /api)
 ```
 
-### Reproduce the numbers
+### Rebuild the data and models from scratch (optional)
+
+The committed artifacts are what this produces. Generating the data needs ~800 Gemini calls (cached and resumable: a free key finishes over a few days, a billing-enabled key in one run).
 
 ```bash
 # 1. data (repo root; Gemini calls are cached in data/raw/llm_cache and resume after quota resets)
 uv run --project ml-service python -m data.generator.root_causes
 uv run --project ml-service python -m data.generator.sample_specs
 uv run --project ml-service python -m data.generator.generate_tickets --workers 6
+mkdir -p data/raw/bitext && curl -L -o data/raw/bitext/bitext.csv "https://huggingface.co/datasets/bitext/Bitext-customer-support-llm-chatbot-training-dataset/resolve/main/Bitext_Sample_Customer_Support_Training_Dataset_27K_responses-v11.csv"
 uv run --project ml-service python -m data.generator.prepare_bitext
 uv run --project ml-service python -m data.generator.build_dataset
 # 2. models + offline evaluation
@@ -98,11 +122,13 @@ uv run --project ml-service python eval/build_report.py
 
 | Suite | Command | Count |
 |---|---|---|
-| ML service (models, LLM gateway, guards) | `cd ml-service && uv run pytest` | 18 |
+| ML service (models, LLM gateway, guards) | `cd ml-service && uv run pytest` | 19 |
 | API integration (real pgvector via Testcontainers + fake ML server) | `cd api && ./mvnw test` | 22 |
 | Dashboard unit/component | `cd dashboard && npm test` | 26 |
 | Browser E2E against the running stack | `cd dashboard && node e2e/smoke.mjs` | 18 checks |
 | Chaos on real processes (Git Bash on Windows) | `scripts/chaos.sh` | 9 checks |
+
+The first three run in CI on every push.
 
 ## Design decisions
 
@@ -118,13 +144,13 @@ Short ADRs are in [`docs/adr`](docs/adr). The ones worth knowing:
 
 ```
 api/          Spring Boot 4 (Java 17): ingest, jobs, triage, dedup, retrieval, drafts, review, metrics, admin
-ml-service/   FastAPI service + training/ (models, evaluation, retraining)
+ml-service/   FastAPI service + training/ (models, evaluation, retraining) + artifacts/ (trained models)
 dashboard/    React + TypeScript (Vite): queue, ticket review, incidents, upload, metrics
-data/         synthetic-data generator, Bitext prep, data card
+data/         synthetic-data generator, Bitext prep, data card, processed/ (the dataset)
 eval/         evaluation report (report.md), pipeline eval, report builder
 infra/        Prometheus / Grafana config, load test
 scripts/      seed + replay, reset, chaos
-docs/         ADRs, ML service OpenAPI contract
+docs/         ADRs, ML service OpenAPI contract, screenshots
 ```
 
 ## Limitations worth stating
@@ -133,3 +159,7 @@ docs/         ADRs, ML service OpenAPI contract
 - Escalation labels come from a known latent function, so its AUC measures recovery of that function, not real-world behaviour.
 - The Gemini key used during development was on the free tier; anything needing more than a few dozen LLM calls per model per day was sampled or left unmeasured.
 - Single-node deployment; the scale-out path (multiple API replicas are already safe for workers; schedulers would need ShedLock; a broker only if job rates exceed what Postgres handles) is reasoned, not benchmarked.
+
+## License
+
+MIT
