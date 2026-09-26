@@ -75,7 +75,7 @@ def draft_prompt(ticket: dict, sources: list[dict], instruction: str | None = No
     if sources:
         src = "\n\n".join(f"[T-{s['id']}] Subject: {s['subject']}\nProblem: {s['problem']}\nResolution: {s['resolution']}"
                           for s in sources)
-        grounding = ("Use ONLY facts from SOURCES. Cite the tickets you used inline as [T-<id>] and list them in citations. "
+        grounding = ("Use ONLY facts from SOURCES. Cite the tickets you used inline as [T-<id>] (one id per bracket, e.g. [T-12][T-30], never [T-12, T-30]) and list them in citations. "
                      "If the sources do not cover the customer's exact situation, say what you can and ask for the missing details.")
     else:
         src = "(no similar resolved tickets found)"

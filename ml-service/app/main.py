@@ -161,6 +161,8 @@ async def llm_draft(req: DraftRequest):
     cits = [CitationOut(ticketId=c["ticketId"], why=c["why"][:200]) for c in d.get("citations", []) if c["ticketId"] in valid]
     stripped = len(d.get("citations", [])) - len(cits)
     reply = d["reply"].strip()
+    # models sometimes group citations as [T-1, T-2]; normalise to one tag per bracket so they can be validated and rendered
+    reply = re.sub(r"\[(T-\d+(?:\s*[,;]\s*T-\d+)+)\]", lambda m: "".join(f"[{x.strip()}]" for x in re.split(r"[,;]", m.group(1))), reply)
     # inline [T-id] tags for ids we did not provide are hallucinations too
     bad_tags = {int(x) for x in re.findall(r"\[T-(\d+)\]", reply)} - valid
     for x in bad_tags:

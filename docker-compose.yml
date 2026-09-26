@@ -1,3 +1,6 @@
+# Full stack:            docker compose up --build            (dashboard http://localhost:8081, API :8080)
+# + Prometheus/Grafana:  docker compose --profile observability up --build   (Grafana http://localhost:3000, admin/admin)
+# Prerequisite: trained model artifacts in ml-service/artifacts (uv run python -m training.train_category ...) and a .env file.
 services:
   postgres:
     image: pgvector/pgvector:pg16
@@ -5,7 +8,7 @@ services:
       POSTGRES_DB: ticketintel
       POSTGRES_USER: ticketintel
       POSTGRES_PASSWORD: ${DB_PASSWORD:-ticketintel}
-    ports: ["5433:5432"]
+    ports: ["5433:5432"]           # 5433 on the host: 5432 is often taken by another local Postgres
     volumes: [pgdata:/var/lib/postgresql/data]
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ticketintel -d ticketintel"]
@@ -16,12 +19,17 @@ services:
   ml-service:
     build: ./ml-service
     env_file: .env
+    environment:
+      ARTIFACTS_DIR: /srv/artifacts
+      LLM_CACHE_DIR: /srv/.llm_cache
+    volumes: ["./ml-service/artifacts:/srv/artifacts"]
     ports: ["8000:8000"]
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://localhost:8000/health/live')"]
+      test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://localhost:8000/health/ready')"]
       interval: 10s
-      timeout: 3s
-      retries: 10
+      timeout: 5s
+      retries: 30
+      start_period: 30s
 
   api:
     build: ./api
@@ -31,10 +39,39 @@ services:
       SPRING_DATASOURCE_USERNAME: ticketintel
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-ticketintel}
       ML_SERVICE_URL: http://ml-service:8000
+      CORS_ORIGINS: http://localhost:8081,http://localhost:5173
     depends_on:
       postgres: { condition: service_healthy }
       ml-service: { condition: service_healthy }
     ports: ["8080:8080"]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8080/actuator/health | grep -q UP"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  dashboard:
+    build: ./dashboard
+    depends_on: [api]
+    ports: ["8081:80"]
+
+  prometheus:
+    image: prom/prometheus:v2.55.1
+    profiles: [observability]
+    volumes: ["./infra/prometheus.yml:/etc/prometheus/prometheus.yml:ro"]
+    ports: ["9090:9090"]
+    depends_on: [api, ml-service]
+
+  grafana:
+    image: grafana/grafana:11.3.0
+    profiles: [observability]
+    environment: { GF_SECURITY_ADMIN_PASSWORD: admin, GF_AUTH_ANONYMOUS_ENABLED: "true" }
+    volumes:
+      - ./infra/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./infra/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports: ["3000:3000"]
+    depends_on: [prometheus]
 
 volumes:
   pgdata:

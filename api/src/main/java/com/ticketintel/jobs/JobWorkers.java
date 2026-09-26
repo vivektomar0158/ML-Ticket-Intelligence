@@ -42,6 +42,10 @@ public class JobWorkers implements ApplicationRunner {
         String h;
         try { h = InetAddress.getLocalHost().getHostName(); } catch (Exception e) { h = "host"; }
         this.host = h;
+        for (JobHandler handler : handlers) {                     // queue depth per job type, sampled at scrape time
+            String type = handler.type();
+            io.micrometer.core.instrument.Gauge.builder("jobs.queue.depth", () -> repo.pendingDepth(type)).tag("type", type).register(metrics);
+        }
     }
 
     @Override

@@ -1,0 +1,114 @@
+{
+  "n_tickets": 1724,
+  "category_model": {
+    "macro_f1": 0.9686811817775056,
+    "accuracy": 0.9617169373549884,
+    "n": 1724
+  },
+  "category_served": {
+    "accuracy": 0.9477958236658933,
+    "share_llm_classified": 0.06670533642691415
+  },
+  "priority": {
+    "macro_f1": 0.7182946984685569,
+    "accuracy": 0.7093967517401392,
+    "urgent_recall": 0.8
+  },
+  "escalation": {
+    "roc_auc": 0.7200612036722204,
+    "senior_share": 0.07946635730858469,
+    "senior_precision": 0.49635036496350365,
+    "senior_recall": 0.2,
+    "base_rate": 0.19721577726218098
+  },
+  "incidents": {
+    "per_incident": [
+      {
+        "incident": "INC-01",
+        "tickets": 56,
+        "in_top_cluster": 49,
+        "recall": 0.875,
+        "purity": 0.7903225806451613,
+        "flagged_incident": true
+      },
+      {
+        "incident": "INC-08",
+        "tickets": 31,
+        "in_top_cluster": 27,
+        "recall": 0.8709677419354839,
+        "purity": 1.0,
+        "flagged_incident": true
+      },
+      {
+        "incident": "INC-11",
+        "tickets": 27,
+        "in_top_cluster": 26,
+        "recall": 0.9629629629629629,
+        "purity": 1.0,
+        "flagged_incident": true
+      },
+      {
+        "incident": "INC-12",
+        "tickets": 55,
+        "in_top_cluster": 49,
+        "recall": 0.8909090909090909,
+        "purity": 0.9245283018867925,
+        "flagged_incident": true
+      },
+      {
+        "incident": "INC-13",
+        "tickets": 39,
+        "in_top_cluster": 36,
+        "recall": 0.9230769230769231,
+        "purity": 0.972972972972973,
+        "flagged_incident": true
+      },
+      {
+        "incident": "INC-14",
+        "tickets": 42,
+        "in_top_cluster": 39,
+        "recall": 0.9285714285714286,
+        "purity": 1.0,
+        "flagged_incident": true
+      }
+    ],
+    "detected": 6,
+    "total": 6,
+    "mean_member_recall": 0.9085813579093149,
+    "mean_purity": 0.9479706425841544,
+    "flagged_clusters": 6,
+    "false_incident_flags": 0
+  },
+  "retrieval_e2e": {
+    "drafted_tickets": 1437,
+    "hit@1": 0.9331941544885177,
+    "hit@5": 0.9568545581071677,
+    "mrr": 0.9424263511946184,
+    "citation_precision": 0.9331941544885177,
+    "citations": 1437
+  },
+  "burst": {
+    "final_states": [
+      {
+        "status": "DRAFTED",
+        "draft_state": "READY",
+        "n": 1437
+      },
+      {
+        "status": "TRIAGED",
+        "draft_state": "SKIPPED",
+        "n": 287
+      }
+    ],
+    "drafts_reused": 222,
+    "llm_draft_calls": 1215,
+    "triage_latency_s": {
+      "triage_p50": 14.879214999999999,
+      "triage_p95": 34.83102965
+    },
+    "draft_latency_s": {
+      "draft_p50": 42.7918,
+      "draft_p95": 71.8446526
+    }
+  }
+}
